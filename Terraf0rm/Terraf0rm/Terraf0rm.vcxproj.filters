@@ -23,7 +23,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="josh.cpp">
+    <ClCompile Include="displaySetUp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
