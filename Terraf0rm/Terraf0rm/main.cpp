@@ -1,6 +1,6 @@
 #include "assembly.h"
 
-int main ()
+int main (int argc, char **argv)
 {
 	//Initailizes Allegro
 	al_init();
