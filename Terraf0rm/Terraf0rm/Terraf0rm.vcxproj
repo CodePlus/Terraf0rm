@@ -67,12 +67,17 @@
   <ItemGroup>
     <ClInclude Include="assembly.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Hero.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="displaySetUp.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Hero.cpp" />
     <ClCompile Include="keyBoardSetUp.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="KylesTestImages\megaman.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
