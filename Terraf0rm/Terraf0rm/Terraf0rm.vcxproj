@@ -71,6 +71,7 @@
   <ItemGroup>
     <ClCompile Include="displaySetUp.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="keyBoardSetUp.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
