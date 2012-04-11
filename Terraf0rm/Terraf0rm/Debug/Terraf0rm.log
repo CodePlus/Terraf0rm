@@ -1,17 +1,17 @@
-﻿Build started 4/10/2012 2:16:57 PM.
-     1>Project "C:\Users\KA1179\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm.vcxproj" on node 2 (build target(s)).
+﻿Build started 4/11/2012 4:19:26 PM.
+     1>Project "C:\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Terraf0rm.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
          All outputs are up-to-date.
        Link:
          All outputs are up-to-date.
-         Terraf0rm.vcxproj -> C:\Users\KA1179\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe
+         Terraf0rm.vcxproj -> C:\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe
        FinalizeBuildStatus:
          Deleting file "Debug\Terraf0rm.unsuccessfulbuild".
          Touching "Debug\Terraf0rm.lastbuildstate".
-     1>Done Building Project "C:\Users\KA1179\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.48
+Time Elapsed 00:00:00.09
