@@ -5,7 +5,6 @@
 void keyboardUse(ALLEGRO_EVENT_QUEUE *event_queue, ALLEGRO_EVENT ev)
 {
 	bool key[7] = {false};
-	bool done = false;
 	if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
 	{
 		switch(ev.keyboard.keycode)

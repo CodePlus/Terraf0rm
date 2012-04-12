@@ -16,10 +16,8 @@ int widthHeight (int variable)
 		return(info.y2 - info.y1);
 }
 
-void displaySet (int width, int height)
+void displaySet (int width, int height, ALLEGRO_DISPLAY *display )
 {
-	//Display Variable
-	ALLEGRO_DISPLAY *display = NULL;
 	//Sets the display to fullscreen and the same size as your screen
 	al_set_new_display_flags(ALLEGRO_FULLSCREEN);
 	//Sets the default display
