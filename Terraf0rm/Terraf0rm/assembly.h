@@ -10,6 +10,8 @@ enum ID{PLAYER, ENEMY, BULLET};
 
 enum KEYS {W, A, S, D, E, SPACE, ENTER};
 
+enum DIRECTION {UP, DOWN, LEFT, RIGHT};
+
 //Function that Reads the width and height
 int widthHeight (int variable);
 //Function to initialize the display

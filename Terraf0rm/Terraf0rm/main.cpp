@@ -12,6 +12,8 @@ int main (int argc, char **argv)
 	int Width = 0, Height = 0;
 	//Set The Frames Per Second to smooth out and standardize the gameplay
 	const int FPS = 60;
+	//Number of bullets you can have on screen
+	const int NUM_BULLETS = 10;
 	//Check to see if we should redraw the Display
 	bool redraw = true;
 	//Keybord Keys to press
@@ -22,6 +24,7 @@ int main (int argc, char **argv)
 	******************************/
 	//Test Player
 	PlAyEr player;
+	BusterCannon shot[10];
 
 	/******************************
 	*     Allegro Variables       *
@@ -50,6 +53,7 @@ int main (int argc, char **argv)
 	timer = al_create_timer(1.0/FPS);
 	//Initialize Test Player
 	initPlayer(player, Width, Height);
+	initShot(shot, NUM_BULLETS);
 
 	/******************************
 	*      Allegro Installs       *
@@ -74,7 +78,10 @@ int main (int argc, char **argv)
 		//Fires off the computing and draws 60 times every second
 		if(ev.type == ALLEGRO_EVENT_TIMER)
 		{
-			redraw = true;
+			/***********************
+			*  Keyboard Detection  *
+			***********************/
+			
 			if(key[W])
 				MovePlayerUp(player);
 			if(key[S])
@@ -83,6 +90,14 @@ int main (int argc, char **argv)
 				MovePlayerLeft(player);
 			if(key[D])
 				MovePlayerRight(player, Width);
+			if(key[ENTER])
+				gameComplete = true;
+
+			/***********************
+			*   Update Stuff Here  *
+			***********************/
+			redraw = true;
+			updateShot(shot, NUM_BULLETS, Height, Width);
 		}
 		if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
 		{
@@ -108,6 +123,7 @@ int main (int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = true;
+				fireShot(shot, NUM_BULLETS, player);
 				break;
 			}
 		}
@@ -144,6 +160,8 @@ int main (int argc, char **argv)
 			redraw = false;
 			//Draws Player on the preFlipped Display
 			drawPlayer(player);
+			//Draw the bullet if its live
+			drawShot(shot,NUM_BULLETS);
 			//Sends the changes to the screen
 			al_flip_display();
 			//Changes the color of the game window that's not flipped
