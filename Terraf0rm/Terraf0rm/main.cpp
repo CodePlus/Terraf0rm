@@ -5,6 +5,8 @@ int main (int argc, char **argv)
 	/*******************************
 	*	  GameEngine Variables     *
 	*******************************/
+	//Check for when the game engine has completed running
+	bool gameComplete = false;
 
 	/******************************
 	*      Object Variables       *
@@ -25,5 +27,14 @@ int main (int argc, char **argv)
 	//Initializes the display set up
 	displaySet();
 
+
+	/****************************
+	*     Game Engine Loop      *
+	****************************/
+
+	while(!gameComplete)
+	{
+
+	}
 	return 0;
 }
