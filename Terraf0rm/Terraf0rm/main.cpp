@@ -18,25 +18,39 @@ int main (int argc, char **argv)
 	bool redraw = true;
 	//Keybord Keys to press
 	bool key[7] = {false};
-	
-	//map
+
 	int xOff = 0;
 	int yOff = 0;
 
-	int mapColumns = 10;
-	int mapSize = 100;
+	int mapColumns = 25;
+	int mapSize = 625;
 	int tileSize = 30;
 
-	int map[] = {5,3,3,3,3,3,3,3,3,5,
-		         1,0,0,0,0,0,0,0,0,2,
-				 1,0,0,0,0,0,0,0,0,2,
-				 1,0,0,0,0,0,0,0,0,2,
-				 1,0,0,0,0,0,0,0,0,2,
-				 1,0,0,0,0,0,0,0,0,2,
-				 1,0,0,0,0,0,0,0,0,2,
-				 1,0,0,0,0,0,0,0,0,2,
-				 1,0,0,0,0,0,0,0,0,2,
-				 5,4,4,4,4,4,4,4,4,5};
+	int map[] = {5,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,5,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+		         1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,
+				 5,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,5,};
 
 	/******************************
 	*      Object Variables       *
@@ -56,6 +70,7 @@ int main (int argc, char **argv)
 	ALLEGRO_DISPLAY *display = NULL;
 	//Map Sprite
 	ALLEGRO_BITMAP *mapSprite = NULL;
+
 	/******************************
 	*  Initialization Functions   *
 	******************************/
@@ -79,12 +94,11 @@ int main (int argc, char **argv)
 	*      Allegro Installs       *
 	******************************/
 	al_install_keyboard();
-	al_init_image_addon();
+	al_init_primitives_addon();
 	al_init_font_addon();
 	al_init_ttf_addon();
-	al_init_primitives_addon();
+	al_init_image_addon();
 
-	//Assign mapSprite with tiles.png
 	mapSprite = al_load_bitmap("tiles.png");
 
 	/******************************
@@ -101,9 +115,13 @@ int main (int argc, char **argv)
 	{
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
-
+		//Fires off the computing and draws 60 times every second
 		if(ev.type == ALLEGRO_EVENT_TIMER)
 		{
+			/***********************
+			*  Keyboard Detection  *
+			***********************/
+			
 			if(key[W])
 				MovePlayerUp(player);
 			if(key[S])
@@ -111,20 +129,22 @@ int main (int argc, char **argv)
 			if(key[A])
 				MovePlayerLeft(player);
 			if(key[D])
-				MovePlayerRight(player, Height);
+				MovePlayerRight(player, Width);
 			if(key[ENTER])
 				gameComplete = true;
 
 			xOff -= key[D] * 5;
 			xOff += key[A] * 5;
-			yOff -= key[S] * 5;
-			yOff += key[W] * 5;
+			xOff -= key[S] * 5;
+			xOff += key[W] * 5;
 
+			/***********************
+			*   Update Stuff Here  *
+			***********************/
 			redraw = true;
 			updateShot(shot, NUM_BULLETS, Height, Width);
 		}
-		
-		else if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
+		if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
 		{
 			switch(ev.keyboard.keycode)
 			{
@@ -181,25 +201,24 @@ int main (int argc, char **argv)
 		}
 		if (redraw && al_is_event_queue_empty(event_queue))
 		{
-			//Draws map
 			for(int i = 0; i < mapSize; i++)
 			{
-				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, xOff + tileSize * (i % mapColumns), yOff + tileSize * (i / mapColumns), 0);
+				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, 
+					xOff + tileSize * (i % mapColumns), yOff + tileSize * (i / mapColumns), 0);
 			}
-
 			//Set redraw it false since we're about to draw to screen
 			redraw = false;
 			//Draws Player on the preFlipped Display
 			drawPlayer(player);
 			//Draw the bullet if its live
 			drawShot(shot,NUM_BULLETS);
-
 			//Sends the changes to the screen
 			al_flip_display();
 			//Changes the color of the game window that's not flipped
 			al_clear_to_color(al_map_rgb(0,0,0));
 		}
 	}
+
 	al_destroy_event_queue(event_queue);
 	al_destroy_timer(timer);
 	al_destroy_display(display);
