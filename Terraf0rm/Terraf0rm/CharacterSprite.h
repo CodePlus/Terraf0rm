@@ -9,6 +9,7 @@
 
 class CharacterSprite : public GameObject
 {
+	#pragma message ("CharacterSprite Class is included")
 public:
 		CharacterSprite();
 
@@ -19,15 +20,11 @@ public:
 		int getHealth() {return mHealth;}
 		void setHealth(int newHealth) {mHealth = newHealth;}
 
-		void loseHealth() {mHealth--;}
-		void useMana() {mMana--;}
+		void loseHealth() {mHealth -= 10;}
+		void useMana() {mMana -= 2;}
 
 		int getMana() {return mMana;}
 		void setMana (int newMana) {mMana = newMana;}
-
-		int getAnimationRow() {return mAnimationRow;}
-		void setAnimationRow(int newAnimationRow) {mAnimationRow = newAnimationRow;}
-		void resetAnimation(int position);
 
 		void virtual Collide(int objectID);
 
@@ -38,6 +35,4 @@ private:
 		int mHealth;
 		//Energy Points (Mana xP)
 		int mMana;
-		//The Row to animate on the Bitmap
-		int mAnimationRow;
 };

@@ -1,5 +1,9 @@
 #include "assembly.h"
-#include "testPlayer.h"
+#include "GameObject.h"
+#include "CharacterSprite.h"
+#include "cannon.h"
+#include "Hero.h"
+
 
 int main (int argc, char **argv)
 {
@@ -9,15 +13,15 @@ int main (int argc, char **argv)
 	//Check for when the game engine has completed running
 	bool gameComplete = false;
 	//Initalize the width and height Variables of the monitor
-	int Width = 0, Height = 0;
+	int Width = 0, Height = 0, FrameSmoother = 1;
 	//Set The Frames Per Second to smooth out and standardize the gameplay
 	const int FPS = 60;
-	//Number of bullets you can have on screen
-	const int NUM_BULLETS = 10;
 	//Check to see if we should redraw the Display
 	bool redraw = true;
 	//Keybord Keys to press
 	bool key[7] = {false};
+
+	int Frame = 1;
 
 	int xOff = 0;
 	int yOff = 0;
@@ -56,8 +60,8 @@ int main (int argc, char **argv)
 	*      Object Variables       *
 	******************************/
 	//Test Player
-	PlAyEr player;
-	BusterCannon shot[10];
+	Hero player;
+	Cannon buster;
 
 	/******************************
 	*     Allegro Variables       *
@@ -70,6 +74,8 @@ int main (int argc, char **argv)
 	ALLEGRO_DISPLAY *display = NULL;
 	//Map Sprite
 	ALLEGRO_BITMAP *mapSprite = NULL;
+	//Player Bitmap
+	ALLEGRO_BITMAP *playerSprite = NULL;
 
 	/******************************
 	*  Initialization Functions   *
@@ -86,9 +92,6 @@ int main (int argc, char **argv)
 	event_queue = al_create_event_queue();
 	//Creates the timer
 	timer = al_create_timer(1.0/FPS);
-	//Initialize Test Player
-	initPlayer(player, Width, Height);
-	initShot(shot, NUM_BULLETS);
 
 	/******************************
 	*      Allegro Installs       *
@@ -99,7 +102,16 @@ int main (int argc, char **argv)
 	al_init_ttf_addon();
 	al_init_image_addon();
 
-	mapSprite = al_load_bitmap("tiles.png");
+	/******************************************************
+	*     Sprite Loading Area  &  Charactor Initalization *
+	******************************************************/
+
+	mapSprite = al_load_bitmap("art bitmaps/tiles.png");
+	playerSprite = al_load_bitmap("art bitmaps/main character/Main character/main char together.bmp");
+
+		//Initialize Test Player
+	player.InitHero(playerSprite, Height, Width);
+	buster.initCannon();
 
 	/******************************
 	* Allegro EVENT_QUEUE Sources *
@@ -123,26 +135,80 @@ int main (int argc, char **argv)
 			***********************/
 			
 			if(key[W])
-				MovePlayerUp(player);
+			{
+				player.setDirection(UP);
+				player.moveUp();
+				if (FrameSmoother % 10 == 0)
+			{
+				if (Frame > 3)
+					Frame = 1;
+				player.setcurFrame(Frame);
+				Frame++;
+				FrameSmoother = 1;
+			}
+			else
+				FrameSmoother++;
+			}
 			if(key[S])
-				MovePlayerDown(player, Height);
+			{
+			player.setDirection(DOWN);
+			player.moveDown();
+			if (FrameSmoother % 10 == 0)
+			{
+				if (Frame > 3)
+					Frame = 1;
+				player.setcurFrame(Frame);
+				Frame++;
+				FrameSmoother = 1;
+			}
+			else
+				FrameSmoother++;
+			}
 			if(key[A])
-				MovePlayerLeft(player);
+			{
+				player.setDirection(LEFT);
+				player.moveLeft();
+				if (FrameSmoother % 10 == 0)
+				{
+					if (Frame > 3)
+						Frame = 1;
+					player.setcurFrame(Frame);
+					Frame++;
+					FrameSmoother = 1;
+				}
+			else
+				FrameSmoother++;
+			}
 			if(key[D])
-				MovePlayerRight(player, Width);
+			{
+				player.setDirection(RIGHT);
+				player.moveRight();
+				if (FrameSmoother % 10 == 0)
+				{
+					if (Frame > 3)
+						Frame = 1;
+					player.setcurFrame(Frame);
+					Frame++;
+					FrameSmoother = 1;
+				}
+			else
+				FrameSmoother++;
+			}
 			if(key[ENTER])
 				gameComplete = true;
 
-			xOff -= key[D] * 5;
-			xOff += key[A] * 5;
-			xOff -= key[S] * 5;
-			xOff += key[W] * 5;
+				
 
 			/***********************
 			*   Update Stuff Here  *
 			***********************/
+			xOff -= key[D] * 5;
+			xOff += key[A] * 5;
+			yOff -= key[S] * 5;
+			yOff += key[W] * 5;
+
 			redraw = true;
-			updateShot(shot, NUM_BULLETS, Height, Width);
+			buster.Update();
 		}
 		if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
 		{
@@ -168,7 +234,6 @@ int main (int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = true;
-				fireShot(shot, NUM_BULLETS, player);
 				break;
 			}
 		}
@@ -196,22 +261,23 @@ int main (int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = false;
+				buster.fireCannon(player);
 				break;
 			}
+			player.setcurFrame(0);
 		}
 		if (redraw && al_is_event_queue_empty(event_queue))
 		{
 			for(int i = 0; i < mapSize; i++)
 			{
-				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, 
-					xOff + tileSize * (i % mapColumns), yOff + tileSize * (i / mapColumns), 0);
+				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, xOff + tileSize * (i % mapColumns), yOff + tileSize * (i / mapColumns), 0);
 			}
 			//Set redraw it false since we're about to draw to screen
 			redraw = false;
 			//Draws Player on the preFlipped Display
-			drawPlayer(player);
+			player.Render(player.getSuitID());
 			//Draw the bullet if its live
-			drawShot(shot,NUM_BULLETS);
+			buster.Render();
 			//Sends the changes to the screen
 			al_flip_display();
 			//Changes the color of the game window that's not flipped

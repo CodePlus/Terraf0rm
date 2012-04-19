@@ -9,7 +9,10 @@
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_primitives.h>
 
+
 enum ID{PLAYER, ENEMY, BULLET};
+
+enum heroID {NonSuit, Suit};
 
 enum KEYS {W, A, S, D, E, SPACE, ENTER};
 

@@ -21,7 +21,9 @@ GameObject::GameObject()
 	frameWidth = 0;
 	frameHeight = 0;
 	animationColumns = 0;
-	animationDirection = 0;
+	animationRow = 0;
+
+	Direction = RIGHT;
 
 	image = NULL;
 
@@ -60,6 +62,19 @@ void GameObject::Update()
 void GameObject::Render()
 {
 
+}
+void GameObject::resetAnimation(int position)
+{
+	if (position == 1)
+	{
+		animationRow = 1;
+		dirY = 0;
+	}
+	else 
+	{
+		curFrame = 0;
+		dirX = 0;
+	}
 }
 
 bool GameObject::checkCollisions(GameObject *otherObject)
