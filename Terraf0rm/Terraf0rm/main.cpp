@@ -107,7 +107,7 @@ int main (int argc, char **argv)
 	******************************************************/
 
 	mapSprite = al_load_bitmap("art bitmaps/tiles.png");
-	playerSprite = al_load_bitmap("art bitmaps/main character/Main character/main char together.bmp");
+	playerSprite = al_load_bitmap("art bitmaps/Character bitmaps/Main character/main char together.bmp");
 
 		//Initialize Test Player
 	player.InitHero(playerSprite, Height, Width);
