@@ -9,6 +9,14 @@
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_primitives.h>
 
+#include <string>
+
+using std::string;
+
+#define sWIDTH 735
+#define sHEIGHT 735
+#define spriteSize 30
+#define MAX_MONSTERS 10
 
 enum ID{PLAYER, ENEMY, BULLET};
 
