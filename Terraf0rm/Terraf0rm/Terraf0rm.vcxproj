@@ -66,15 +66,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="assembly.h" />
+    <ClInclude Include="cannon.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Hero.h" />
+    <ClInclude Include="monster.h" />
+    <ClInclude Include="ParticleGenerator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cannon.cpp" />
+    <ClCompile Include="CharacterSprite.cpp" />
     <ClCompile Include="displaySetUp.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Hero.cpp" />
-    <ClCompile Include="keyBoardSetUp.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="monster.cpp" />
+    <ClCompile Include="ParticleGenerator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

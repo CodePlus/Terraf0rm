@@ -93,9 +93,16 @@ int main (int argc, char **argv)
 	buster.initCannon();
 
 	Monster monster[MAX_MONSTERS];
+
+	for(int i = 0; i < MAX_MONSTERS; i++)
+	{
+		monster[i].initMonster(NULL);
+	}
 	
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
+
+	srand(time(NULL));
 
 	al_start_timer(timer);
 	while(!gameComplete)
@@ -174,10 +181,11 @@ int main (int argc, char **argv)
 			yOff -= key[S] * 5;
 			yOff += key[W] * 5;
 
-			for(int i = 0; i < MAX_MONSTERS; i++)
-			{
-				monster[i].move(frameCount);
-			}
+	
+				for(int i = 0; i < MAX_MONSTERS; i++)
+				{
+					monster[i].Update(frameCount);
+				}
 
 			if (heroID == Shooting)
 			{
@@ -265,7 +273,7 @@ int main (int argc, char **argv)
 
 			for(int i = 0; i < MAX_MONSTERS; i++)
 			{
-				monster[i].drawMonster(font10, xOff, yOff);
+				monster[i].Render(font10, xOff, yOff);
 			}
 
 			al_flip_display();
