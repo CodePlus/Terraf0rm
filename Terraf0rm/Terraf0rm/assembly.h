@@ -12,7 +12,7 @@
 
 enum ID{PLAYER, ENEMY, BULLET};
 
-enum heroID {NonSuit, Suit};
+enum heroID {NonSuit, Suit, Shooting};
 
 enum KEYS {W, A, S, D, E, SPACE, ENTER};
 

@@ -39,7 +39,7 @@ void Cannon::fireCannon(Hero player)
 		if(mBullets[i] == false)
 		{
 			mBulletX[i] = player.getX();
-			mBulletY[i] = player.getY();
+			mBulletY[i] = player.getY() + 7;
 			mBullets[i] = true;
 			mBulletDirection[i] = player.getDirection();
 			switch (mBulletDirection[i])

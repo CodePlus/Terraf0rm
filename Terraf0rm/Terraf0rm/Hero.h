@@ -22,6 +22,8 @@ class Hero : public CharacterSprite
 
 			void setSuitID (int suit) {mSuitID = suit;}
 			int getSuitID() {return mSuitID;}
+			void setLives (int newLives) {mLives = newLives;}
+			int getLives() {return mLives;}
 
 			~Hero();
 	private:

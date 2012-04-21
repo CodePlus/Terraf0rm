@@ -22,6 +22,8 @@ int main (int argc, char **argv)
 	bool key[7] = {false};
 
 	int Frame = 1;
+	int heroID = Suit;
+	int ShootingSmoother = 1;
 
 	int xOff = 0;
 	int yOff = 0;
@@ -208,6 +210,14 @@ int main (int argc, char **argv)
 			yOff -= key[S] * 5;
 			yOff += key[W] * 5;
 
+			if (heroID == Shooting)
+			{
+				if (ShootingSmoother % 60 == 0)
+					heroID = Suit;
+				else
+					ShootingSmoother++;
+			}
+
 			redraw = true;
 			buster.Update();
 		}
@@ -263,6 +273,7 @@ int main (int argc, char **argv)
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = false;
 				buster.fireCannon(player);
+				heroID = Shooting;
 				break;
 			}
 			player.setcurFrame(0);
@@ -275,10 +286,10 @@ int main (int argc, char **argv)
 			}
 			//Set redraw it false since we're about to draw to screen
 			redraw = false;
-			//Draws Player on the preFlipped Display
-			player.Render(player.getSuitID());
 			//Draw the bullet if its live
 			buster.Render();
+			//Draws Player on the preFlipped Display
+			player.Render(heroID);
 			//Sends the changes to the screen
 			al_flip_display();
 			//Changes the color of the game window that's not flipped
