@@ -12,7 +12,7 @@ class Hero : public CharacterSprite
 			Hero();
 			void InitHero(ALLEGRO_BITMAP *image, int Height, int Width);
 			void Update();
-			void Render(int heroType);
+			void Render();
 			void Destroy();
 			void Collide(int objectID);
 			void moveUp();

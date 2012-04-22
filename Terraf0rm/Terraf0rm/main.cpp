@@ -17,8 +17,7 @@ int main (int argc, char **argv)
 	bool key[7] = {false};
 
 	int Frame = 1;
-	int heroID = Suit;
-	int ShootingSmoother = 1;
+	int EnergyRegen = 0;
 
 	int frameCount = 0;
 
@@ -57,6 +56,7 @@ int main (int argc, char **argv)
 
 	Hero player;
 	Cannon buster;
+	Monster monster[MAX_MONSTERS];
 
 	ALLEGRO_EVENT_QUEUE *event_queue = NULL;
 	ALLEGRO_TIMER *timer = NULL;
@@ -91,8 +91,6 @@ int main (int argc, char **argv)
 
 	player.InitHero(playerSprite, Height, Width);
 	buster.initCannon();
-
-	Monster monster[MAX_MONSTERS];
 
 	for(int i = 0; i < MAX_MONSTERS; i++)
 	{
@@ -186,17 +184,24 @@ int main (int argc, char **argv)
 				{
 					monster[i].Update(frameCount);
 				}
-
-			if (heroID == Shooting)
-			{
-				if (ShootingSmoother % 60 == 0)
-					heroID = Suit;
-				else
-					ShootingSmoother++;
-			}
+				if (player.getMana() < 100 && player.getMana() >= 0)
+				{
+					if (EnergyRegen % 60 == 0)
+						player.setMana((player.getMana() + 1));
+					EnergyRegen++;
+				}
+				if (player.getMana() < 0)
+					player.setMana(0);
 
 			redraw = true;
 			buster.Update();
+			for(int index = 0; index < MAX_MONSTERS; index++)
+			{
+				if(player.checkCollisions(monster[index].getX(), monster[index].getY(), monster[index].getBoundX(), monster[index].getBoundY()))
+				{
+					player.Collide(ENEMY);
+				}
+			}
 		}
 
 		if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
@@ -251,8 +256,11 @@ int main (int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = false;
-				buster.fireCannon(player);
-				heroID = Shooting;
+				if (player.getMana() > 0)
+				{
+					buster.fireCannon(player);
+					player.useMana();
+				}
 				break;
 			}
 			player.setcurFrame(0);
@@ -269,7 +277,7 @@ int main (int argc, char **argv)
 
 			buster.Render();
 
-			player.Render(heroID);
+			player.Render();
 
 			for(int i = 0; i < MAX_MONSTERS; i++)
 			{

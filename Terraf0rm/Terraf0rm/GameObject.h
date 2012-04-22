@@ -51,7 +51,7 @@ public:
 		int getCurFrame() {return curFrame;}
 		void setcurFrame(int newFrame) {curFrame = newFrame;}
 
-		bool checkCollisions(GameObject *otherObject);
+		bool checkCollisions(float X, float Y, int BoundX, int BoundY);
 		void virtual Collided(int objectID);
 		bool Collidable();
 

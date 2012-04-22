@@ -36,35 +36,11 @@ void Hero::Update()
 {
 	CharacterSprite::Update();
 }
-void Hero::Render(int heroType)
+void Hero::Render()
 {
 	int height = 0, width = 0, count = 0;
 	width = widthHeight(0);
 	height = widthHeight(1);
-	if (heroType == Shooting)
-	{
-		switch (curFrame)
-		{
-		case 1: curFrame = 4;
-			break;
-		case 2: curFrame = 5;
-			break;
-		case 3: curFrame = 6;
-			break;
-		}
-	}
-	else if (heroType == Suit)
-	{
-		switch (curFrame)
-		{
-		case 4: curFrame = 1;
-			break;
-		case 5: curFrame = 2;
-			break;
-		case 6: curFrame = 3;
-			break;
-		}
-	}
 
 	CharacterSprite::Render();
 	int fx = (curFrame % animationColumns * frameWidth);
