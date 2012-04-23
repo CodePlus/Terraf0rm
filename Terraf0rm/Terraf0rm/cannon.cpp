@@ -32,34 +32,34 @@ void Cannon::initCannon()
 	
 	setCollideable(true);
 }
-void Cannon::fireCannon(Hero player)
+void Cannon::fireCannon(Hero *player)
 {
 	for(int i = 0; i < getNumParticles(); i++)
 	{
 		if(mBullets[i] == false)
 		{
-			if(player.getDirection() == DOWN)
+			if(player->getDirection() == DOWN)
 			{
-				mBulletX[i] = player.getX() - 7;
-				mBulletY[i] = player.getY() + 8;
+				mBulletX[i] = player->getX() - 7;
+				mBulletY[i] = player->getY() + 8;
 			}
-			else if (player.getDirection() == RIGHT)
+			else if (player->getDirection() == RIGHT)
 			{
-				mBulletX[i] = player.getX();
-				mBulletY[i] = player.getY() + 9;
+				mBulletX[i] = player->getX();
+				mBulletY[i] = player->getY() + 9;
 			}
-			else if (player.getDirection() == UP)
+			else if (player->getDirection() == UP)
 			{
-				mBulletX[i] = player.getX() + 5;
-				mBulletY[i] = player.getY() + 8;
+				mBulletX[i] = player->getX() + 5;
+				mBulletY[i] = player->getY() + 8;
 			}
 			else
 			{
-				mBulletX[i] = player.getX();
-				mBulletY[i] = player.getY() + 8;
+				mBulletX[i] = player->getX();
+				mBulletY[i] = player->getY() + 8;
 			}
 			mBullets[i] = true;
-			mBulletDirection[i] = player.getDirection();
+			mBulletDirection[i] = player->getDirection();
 			switch (mBulletDirection[i])
 			{
 			case UP: 

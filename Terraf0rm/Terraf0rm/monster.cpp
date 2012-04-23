@@ -5,9 +5,11 @@
 Monster::Monster()
 {
 	name = "MONSTER";
-
+	mXOff = 0;
+	mYOff = 0;
 	attack = 1;
 	range = 1;
+	mFrameCount = 0;
 }
 
 Monster::~Monster()
@@ -15,7 +17,7 @@ Monster::~Monster()
 }
 
 
-void Monster::initMonster(ALLEGRO_BITMAP *image)
+void Monster::initMonster(ALLEGRO_BITMAP *image, ALLEGRO_FONT *Font)
 {
 	setHealth(50);
 
@@ -24,12 +26,12 @@ void Monster::initMonster(ALLEGRO_BITMAP *image)
 	dirX = 1;
 	dirY = 1;
 
-	GameObject::init(sWIDTH / 2, sHEIGHT / 2, 1, 1, 0, 0, 10, 10);
-
+	GameObject::init(sWIDTH / 2, sHEIGHT / 2, 1, 1, 0, 0, 30, 30);
+	mFont = Font;
 	setID(ENEMY);
 
 	setAlive(true);
-
+	setCollideable(true);
 	//setDirection(rand() % 4);
 
 	maxFrame = 0;
@@ -84,9 +86,10 @@ void Monster::Collide(int objectID)
 	}
 }
 
-void Monster::Update(int frameCount)
+void Monster::Update()
 {
-	move(frameCount);
+	move(mFrameCount);
+	mFrameCount++;
 }
 
 void Monster::Destroy()
@@ -94,17 +97,17 @@ void Monster::Destroy()
 	GameObject::Destroy();
 }
 
-void Monster::Render(ALLEGRO_FONT *font, int xOff, int yOff)
+void Monster::Render()
 {
 	for(int i = 0; i < MAX_MONSTERS; i++)
 	{
 		if(getAlive())
 		{
-			al_draw_textf(font, al_map_rgb(0, 0, 0), x + xOff + 15, y + yOff + 35, ALLEGRO_ALIGN_CENTRE, "%s", name.c_str());
+			al_draw_textf(mFont, al_map_rgb(0, 0, 0), x + mXOff + 15, y + mYOff + 35, ALLEGRO_ALIGN_CENTRE, "%s", name.c_str());
 
-			al_draw_filled_rectangle(x + xOff, y + yOff, x + xOff + spriteSize, y + yOff + spriteSize, al_map_rgb(255, 0, 0));
+			al_draw_filled_rectangle(x + mXOff, y + mYOff, x + mXOff + spriteSize, y + mYOff + spriteSize, al_map_rgb(255, 0, 0));
 
-			drawHealthBar(getHealth(), font, x + xOff, y + yOff);
+			drawHealthBar(getHealth(), mFont, x + mXOff, y + mYOff);
 		}
 	}
 }

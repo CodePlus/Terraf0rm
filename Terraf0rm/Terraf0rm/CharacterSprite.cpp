@@ -8,16 +8,16 @@ CharacterSprite::CharacterSprite()
 void CharacterSprite::Update()
 {
 	int WIDTH = 0, HEIGHT = 0;
-	WIDTH = widthHeight(0);
-	HEIGHT = widthHeight(1);
+	WIDTH = sWIDTH;
+	HEIGHT = sHEIGHT;
 	GameObject::Update();
-	if(x < 0)
-		x = 0;
-	else if (x > WIDTH)
+	if(x <= 15)
+		x = 15;
+	else if (x >= WIDTH - 15)
 		x = WIDTH;
-	if (y < 0)
-		y = 0;
-	else if (y > HEIGHT)
+	if (y <= 15)
+		y = 15;
+	else if (y >= HEIGHT - 15)
 		y = HEIGHT;
 }
 void CharacterSprite::Render()

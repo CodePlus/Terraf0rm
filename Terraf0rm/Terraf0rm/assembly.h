@@ -8,10 +8,11 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_primitives.h>
+#include <list>
 
 #include <string>
 
-using std::string;
+using namespace std;
 
 #define sWIDTH 735
 #define sHEIGHT 735
@@ -25,6 +26,8 @@ enum heroID {NonSuit, Suit, Shooting};
 enum KEYS {W, A, S, D, E, SPACE, ENTER};
 
 enum DIRECTION {UP, DOWN, LEFT, RIGHT};
+
+enum GAMESTATE {TITLE, PLAY, PAUSE, LOSE};
 
 //Function that Reads the width and height
 int widthHeight (int variable);

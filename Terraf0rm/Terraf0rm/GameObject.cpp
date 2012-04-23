@@ -77,15 +77,15 @@ void GameObject::resetAnimation(int position)
 	}
 }
 
-bool GameObject::checkCollisions(float X, float Y, int BoundX, int BoundY)
+bool GameObject::checkCollisions(GameObject *OtherObject)
 {
-	float oX = X;
-	float oY = Y;
+	float oX = OtherObject->getX();
+	float oY = OtherObject->getY();
 
-	int obX = BoundX;
-	int obY = BoundY;
+	int obX = OtherObject->getBoundX();
+	int obY = OtherObject->getBoundY();
 
-	if (GameObject::x + GameObject::boundX > oX - obX && GameObject::x - GameObject::boundX < oX + obX && GameObject::y + GameObject::boundY > oY - obY && GameObject::y - GameObject::boundY < oY + obY)
+	if (x + boundX > oX - obX && x - boundX < oX + obX && y + boundY > oY - obY && y - boundY < oY + obY)
 		return true;
 	else
 		return false;

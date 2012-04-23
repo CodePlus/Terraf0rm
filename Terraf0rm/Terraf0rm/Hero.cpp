@@ -11,13 +11,13 @@ void Hero::InitHero(ALLEGRO_BITMAP *image, int Height, int Width)
 
 	Hero::image = image;
 
-	GameObject::init((Width/2),(Height/2), 5, 5, 0, 0, 10, 10);
+	GameObject::init((sWIDTH/2),(sHEIGHT/2 + 300), 0, 0, 0, 0, 30, 30);
 
 	setID(PLAYER);
 	setSuitID(NonSuit);
 
 	setAlive(true);
-
+	setCollideable(true);
 	setDirection(DOWN);
 
 	mLives = 3;
@@ -51,7 +51,8 @@ void Hero::Render()
 	//Health Bar
 	al_draw_filled_rectangle(10, height - 100, getHealth() * 5, height - 95, al_map_rgb(255,0,0));
 	//Energy Bar
-	al_draw_filled_rectangle(10, height - 90, getMana() * 2, height - 85, al_map_rgb(0,0,255));
+	if (getMana() > 0)
+		al_draw_filled_rectangle(10, height - 90, getMana() * 2, height - 85, al_map_rgb(0,0,255));
 	//Amount of lives left
 	while(count < getLives())
 	{

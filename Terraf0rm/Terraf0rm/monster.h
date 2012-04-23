@@ -7,7 +7,7 @@ class Monster : public CharacterSprite
 		Monster();
 		~Monster();
 
-		void initMonster(ALLEGRO_BITMAP *image);
+		void initMonster(ALLEGRO_BITMAP *image, ALLEGRO_FONT *Font);
 	
 		void setName(string nName);
 		void setAttack(int nAttack);
@@ -17,7 +17,7 @@ class Monster : public CharacterSprite
 		int getAttack();
 		int getRange();
 
-		void Render(ALLEGRO_FONT *font, int xOff, int yOff);
+		void Render();
 
 		void move(int frameCount);
 		void moveUp();
@@ -27,8 +27,11 @@ class Monster : public CharacterSprite
 
 		void Collide(int objectID);
 
-		void Update(int frameCount);
+		void Update();
 		void Destroy();
+
+		void setXOff (int newXOff) {mXOff = newXOff;}
+		void setYOff (int newYOff) {mYOff = newYOff;}
 
 	protected:
 		string name;
@@ -37,6 +40,12 @@ class Monster : public CharacterSprite
 		int range;
 
 		int direction;
+
+	private:
+		int mFrameCount;
+		ALLEGRO_FONT *mFont;
+		int mXOff;
+		int mYOff;
 };
 
 void drawHealthBar(int health, ALLEGRO_FONT *font, int pos_x, int pos_y);

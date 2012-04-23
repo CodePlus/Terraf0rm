@@ -12,7 +12,7 @@ class Cannon : public ParticleGenerator
 public:
 		Cannon();
 		void initCannon();
-		void fireCannon(Hero player);
+		void fireCannon(Hero *player);
 
 		void Update();
 		void Render();
