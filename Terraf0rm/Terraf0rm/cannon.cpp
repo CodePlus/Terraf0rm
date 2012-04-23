@@ -7,37 +7,34 @@ Cannon::Cannon()
 
 void Cannon::initCannon()
 {
-	GameObject::init(0,0,0,0,0,0,2,2);
+	GameObject::init(0,0,10,10,0,0,3,3);
 	setID(BULLET);
 	setAlive(false);
 	setCollideable(true);
 	setDirection(DOWN);
 	
-	setRed(255);
-	setGreen(215);
-	setBlue(0);
+	setRed(50);
+	setGreen(255);
+	setBlue(10);
 
 	setSize(3);
-	setLength(200);
-	setWidth(1);
 	setSpeed(10);
-	setNumParticles(10);
-	setAlive(true);
-	setCollideable(true);
 }
 void Cannon::fireCannon(Hero *player)
 {
-	if(player->getDirection() == DOWN)
+	setAlive(true);
+	setDirection(player->getDirection());
+	if(getDirection() == DOWN)
 	{
 		setX(player->getX() - 7);
 		setY(player->getY() + 8);
 	}
-	else if (player->getDirection() == RIGHT)
+	else if (getDirection() == RIGHT)
 	{
 		setX(player->getX());
 		setY(player->getY() + 9);
 	}
-	else if (player->getDirection() == UP)
+	else if (getDirection() == UP)
 	{
 		setX(player->getX() + 5);
 		setY(player->getY() + 8);
@@ -47,47 +44,40 @@ void Cannon::fireCannon(Hero *player)
 		setX(player->getX());
 		setY(player->getY() + 8);
 	}
-	setAlive(true);
-	setDirection(player->getDirection());
 }
 
 
 void Cannon::Update()
 {
-	if(getAlive())
+	switch(getDirection())
 	{
-		switch (getDirection())
-		{
-		case UP:y -= getSpeed();
-			if(y < sHEIGHT)
-				setAlive(false);
-			break;
-		case DOWN:y += getSpeed();
-			if(y > 15)
-				setAlive(false);
-			break;
-		case LEFT:x-= getSpeed();
-			if(x < 15)
-				setAlive(false);
-			break;
-		case RIGHT:x += getSpeed();
-			if(x > sWIDTH)
-				setAlive(false);
-			break;
-		}
+	case UP: y-= getSpeed();
+		break;
+	case DOWN: y+= getSpeed();
+		break;
+	case LEFT: x-= getSpeed();
+		break;
+	case RIGHT: x+= getSpeed();
+		break;
 	}
-}
+	if(y > sHEIGHT)
+		Collided(ENEMY);
+	else if(y < 15)
+		Collided(ENEMY);
+	if(x < 15)
+		Collided(ENEMY);
+	else if(x > sWIDTH)
+		Collided(ENEMY);
+
+ }
 void Cannon::Render()
 {
-	if(getAlive())
-		al_draw_filled_circle(getX(), getY(), getSize(), al_map_rgb(getRed(),getGreen(),getBlue()));
+	al_draw_filled_circle(getX(), getY(), getSize(), al_map_rgb(getRed(),getGreen(),getBlue()));
 }
 void Cannon::Collided(int objectID)
 {
-	if(objectID == ENEMY)
-	{
-
-	}
+	if (objectID == ENEMY)
+		setAlive(false);
 }
 
 Cannon::~Cannon()

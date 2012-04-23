@@ -29,9 +29,9 @@ public:
 		int getBlue() {return mBlue;}
 		void setBlue(int newBlue) {mBlue = newBlue;}
 
-		void  virtual Update();
-		void virtual Render();
-		void virtual Collided(int objectID);
+		void Update();
+		void Render();
+		void Collided(int objectID);
 
 		~ParticleGenerator();
 

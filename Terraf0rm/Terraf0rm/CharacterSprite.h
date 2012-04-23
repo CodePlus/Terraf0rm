@@ -26,7 +26,7 @@ public:
 		int getMana() {return mMana;}
 		void setMana (int newMana) {mMana = newMana;}
 
-		void virtual Collide(int objectID);
+		void Collide(int objectID);
 
 		~CharacterSprite();
 

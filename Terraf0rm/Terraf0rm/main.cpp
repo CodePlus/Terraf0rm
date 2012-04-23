@@ -9,7 +9,6 @@
 *  Obect Declerations  *
 ***********************/
 Hero *player;
-Cannon *buster[MAX_CANNON_PARTICLES];
 Monster *monster[MAX_MONSTERS];
 std::list<GameObject *> objects;
 std::list<GameObject *>::iterator iter;
@@ -113,9 +112,6 @@ int main (int argc, char **argv)
 	//First Allocate Memory Space for each object
 	player = new Hero();
 
-	for(int i = 0; i < MAX_CANNON_PARTICLES; i++)
-		buster[i] = new Cannon();
-
 	for(int i = 0; i < MAX_MONSTERS; i++)
 	{
 		monster[i] = new Monster();
@@ -124,11 +120,6 @@ int main (int argc, char **argv)
 	//Then Initiate
 	player->InitHero(playerSprite, Height, Width);
 	objects.push_back(player);
-	for(int i = 0; i < MAX_CANNON_PARTICLES;i++)
-	{
-		buster[i]->initCannon();
-		objects.push_back(buster[i]);
-	}
 	for(int i = 0; i < MAX_MONSTERS; i++)
 	{
 		monster[i]->initMonster(rand() % 3, font10);
@@ -335,14 +326,13 @@ int main (int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = false;
-				for(int i = 0; i < MAX_CANNON_PARTICLES; i++)
-				{	
-					if(buster[i]->getAlive() != true)
-					{
-						buster[i]->fireCannon(player);
-						player->useMana();
-						break;
-					}
+				if (player->getMana() > 0)
+				{
+					Cannon *bullet = new Cannon();
+					bullet->initCannon();
+					bullet->fireCannon(player);
+					objects.push_back(bullet);
+					player->useMana();
 				}
 				break;
 			}
