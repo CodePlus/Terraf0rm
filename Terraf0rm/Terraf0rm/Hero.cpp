@@ -49,10 +49,10 @@ void Hero::Render()
 	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - frameWidth / 2, y - frameHeight / 2, 0);
 	//HUD
 	//Health Bar
-	al_draw_filled_rectangle(10, height - 100, getHealth() * 5, height - 95, al_map_rgb(255,0,0));
+	al_draw_filled_rectangle(0, height - 100, getHealth() * 5, height - 95, al_map_rgb(255,0,0));
 	//Energy Bar
 	if (getMana() > 0)
-		al_draw_filled_rectangle(10, height - 90, getMana() * 2, height - 85, al_map_rgb(0,0,255));
+		al_draw_filled_rectangle(0, height - 90, getMana() * 2, height - 85, al_map_rgb(0,0,255));
 	//Amount of lives left
 	while(count < getLives())
 	{

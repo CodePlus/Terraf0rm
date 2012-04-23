@@ -18,6 +18,7 @@ using namespace std;
 #define sHEIGHT 720
 #define spriteSize 30
 #define MAX_MONSTERS 10
+#define MAX_CANNON_PARTICLES 10
 
 enum ID{PLAYER, ENEMY, BULLET};
 
