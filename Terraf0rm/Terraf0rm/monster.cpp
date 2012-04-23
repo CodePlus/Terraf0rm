@@ -62,7 +62,7 @@ void Monster::initMonster(int randMonster, ALLEGRO_FONT *Font)
 	dirX = 1;
 	dirY = 1;
 
-	GameObject::init(rand() % sWIDTH + 15, rand() % sHEIGHT + 15, 1, 1, 0, 0, 30, 30);
+	GameObject::init(rand() % sWIDTH + 15 + 250, rand() % sHEIGHT + 15 + 25, 1, 1, 0, 0, 30, 30);
 	mFont = Font;
 	setID(ENEMY);
 
@@ -142,38 +142,34 @@ void Monster::Render()
 	{
 		if(getAlive())
 		{
-			al_draw_textf(mFont, al_map_rgb(0, 0, 0), x + mXOff + 15, y + mYOff + 35, ALLEGRO_ALIGN_CENTRE, "%s", name.c_str());
-
-			//al_draw_filled_rectangle(x + mXOff, y + mYOff, x + mXOff + spriteSize, y + mYOff + spriteSize, al_map_rgb(255, 0, 0));
-
-			al_draw_textf(mFont, al_map_rgb(0, 0, 0), x + mXOff, y + mYOff, ALLEGRO_ALIGN_CENTRE, "%d", direction);
+			al_draw_textf(mFont, al_map_rgb(0, 0, 0), x + 15, y + 35, ALLEGRO_ALIGN_CENTRE, "%s", name.c_str());
 
 			if(direction == W)
 			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, 0, spriteSize, spriteSize, x + mXOff, y + mYOff, 0);
+				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, 0, spriteSize, spriteSize, x, y, 0);
 			}
 
 			else if(direction == A)
 			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 2, spriteSize, spriteSize, x + mXOff, y + mYOff, 0);
+				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 2, spriteSize, spriteSize, x, y, 0);
 			}
 
 			else if(direction == S)
 			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 1, spriteSize, spriteSize, x + mXOff, y + mYOff, 0);
+				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 1, spriteSize, spriteSize, x, y, 0);
 			}
 
 			else if(direction == D)
 			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 3, spriteSize, spriteSize, x + mXOff, y + mYOff, 0);
+				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 3, spriteSize, spriteSize, x, y, 0);
 			}
 
 			else if(direction == 4)
 			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize, spriteSize, spriteSize, x + mXOff, y + mYOff, 0);
+				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize, spriteSize, spriteSize, x, y, 0);
 			}
 
-			drawHealthBar(getHealth(), mFont, x + mXOff, y + mYOff);
+			drawHealthBar(getHealth(), mFont, x, y);
 		}
 	}
 }
@@ -224,7 +220,7 @@ void Monster::move(int frameCount)
 
 void Monster::moveUp()
 {
-	if(y <= 0 + 15)
+	if(y <= 0 + 15  + 25)
 	{
 	}
 
@@ -236,7 +232,7 @@ void Monster::moveUp()
 
 void Monster::moveDown()
 {
-	if(y >= sHEIGHT - spriteSize - 15)
+	if(y >= sHEIGHT - spriteSize - 15 + 25)
 	{
 	}
 	
@@ -248,7 +244,7 @@ void Monster::moveDown()
 
 void Monster::moveLeft()
 {
-	if(x <= 0 + 15)
+	if(x <= 0 + 15 + 250)
 	{
 	}
 	
@@ -260,7 +256,7 @@ void Monster::moveLeft()
 
 void Monster::moveRight()
 {
-	if(x >= sWIDTH - spriteSize - 15)
+	if(x >= sWIDTH - spriteSize - 15 + 250)
 	{
 	}
 	

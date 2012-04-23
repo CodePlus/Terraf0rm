@@ -131,7 +131,6 @@ int main (int argc, char **argv)
 	**************************/
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
-
 	
 	/**************
 	*  Game Loop  *
@@ -343,7 +342,7 @@ int main (int argc, char **argv)
 		{
 			for(int i = 0; i < mapSize; i++)
 			{
-				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, xOff + tileSize * (i % mapColumns), yOff + tileSize * (i / mapColumns), 0);
+				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, 250 + tileSize * (i % mapColumns), 25 + tileSize * (i / mapColumns), 0);
 			}
 
 			for(iter = objects.begin(); iter != objects.end(); ++iter)
