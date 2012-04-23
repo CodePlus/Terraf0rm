@@ -100,8 +100,11 @@ int main (int argc, char **argv)
 	***************************************/
 
 	mapSprite = al_load_bitmap("art bitmaps/tiles.png");
+
 	playerSprite = al_load_bitmap("art bitmaps/Character bitmaps/Main character/main_character_shooting.bmp");
+
 	al_convert_mask_to_alpha(playerSprite, al_map_rgb(255,0,255));
+
 	font10 = al_load_font("fonts/arial.ttf", 10, 0);
 
 	/**************************
@@ -110,10 +113,12 @@ int main (int argc, char **argv)
 	//First Allocate Memory Space for each object
 	player = new Hero();
 	buster = new Cannon();
+
 	for(int i = 0; i < MAX_MONSTERS; i++)
 	{
 		monster[i] = new Monster();
 	}
+
 	//Then Initiate
 	player->InitHero(playerSprite, Height, Width);
 	objects.push_back(player);
@@ -121,7 +126,8 @@ int main (int argc, char **argv)
 	objects.push_back(buster);
 	for(int i = 0; i < MAX_MONSTERS; i++)
 	{
-		monster[i]->initMonster(NULL, font10);
+		monster[i]->initMonster(rand() % 3, font10);
+
 		objects.push_back(monster[i]);
 	}
 
@@ -205,6 +211,7 @@ int main (int argc, char **argv)
 			else
 				FrameSmoother++;
 			}
+
 			if(key[ENTER])
 				gameComplete = true;
 
@@ -340,8 +347,10 @@ int main (int argc, char **argv)
 			{
 				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, xOff + tileSize * (i % mapColumns), yOff + tileSize * (i / mapColumns), 0);
 			}
+
 			for(iter = objects.begin(); iter != objects.end(); ++iter)
 				(*iter)->Render();
+
 			al_flip_display();
 			al_clear_to_color(al_map_rgb(0,0,0));
 			redraw = false;

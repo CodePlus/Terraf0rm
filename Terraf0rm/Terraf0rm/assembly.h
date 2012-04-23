@@ -14,8 +14,8 @@
 
 using namespace std;
 
-#define sWIDTH 735
-#define sHEIGHT 735
+#define sWIDTH 720
+#define sHEIGHT 720
 #define spriteSize 30
 #define MAX_MONSTERS 10
 

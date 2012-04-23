@@ -7,7 +7,7 @@ class Monster : public CharacterSprite
 		Monster();
 		~Monster();
 
-		void initMonster(ALLEGRO_BITMAP *image, ALLEGRO_FONT *Font);
+		void initMonster(int randMonster, ALLEGRO_FONT *Font);
 	
 		void setName(string nName);
 		void setAttack(int nAttack);
