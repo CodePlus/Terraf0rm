@@ -120,7 +120,7 @@ int Monster::getRange()
 	return range;
 }
 
-void Monster::Collide(int objectID)
+void Monster::Collided(int objectID)
 {
 	if(objectID == BULLET)
 	{

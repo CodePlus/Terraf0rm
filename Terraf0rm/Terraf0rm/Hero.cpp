@@ -55,7 +55,7 @@ void Hero::Destroy()
 {
 	GameObject::Destroy();
 }
-void Hero::Collide(int objectID)
+void Hero::Collided(int objectID)
 {
 	if(objectID == BULLET)
 		loseHealth();

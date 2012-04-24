@@ -20,7 +20,7 @@ void CharacterSprite::Destroy()
 
 }
 
-void CharacterSprite::Collide(int objectID)
+void CharacterSprite::Collided(int objectID)
 {
 
 }

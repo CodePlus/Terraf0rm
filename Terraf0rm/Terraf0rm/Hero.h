@@ -15,7 +15,7 @@ class Hero : public CharacterSprite
 			void Update();
 			void Render();
 			void Destroy();
-			void Collide(int objectID);
+			void Collided(int objectID);
 			void moveUp();
 			void moveDown();
 			void moveLeft();

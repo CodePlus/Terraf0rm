@@ -25,7 +25,7 @@ class Monster : public CharacterSprite
 		void moveLeft();
 		void moveRight();
 
-		void Collide(int objectID);
+		void Collided(int objectID);
 
 		void Update();
 		void Destroy();
