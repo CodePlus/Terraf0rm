@@ -28,7 +28,7 @@ enum KEYS {W, A, S, D, E, SPACE, ENTER};
 
 enum DIRECTION {UP, DOWN, LEFT, RIGHT};
 
-enum GAMESTATE {TITLE, PLAY, PAUSE, LOSE};
+enum GAMESTATE {TITLE, PLAY, DEAD};
 
 //Function that Reads the width and height
 int widthHeight (int variable);
