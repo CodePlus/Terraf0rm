@@ -14,6 +14,8 @@ std::list<GameObject *> objects;
 std::list<GameObject *>::iterator iter;
 std::list<GameObject *>::iterator iter2;
 
+void changeState (int &state, int newState);
+
 int main (int argc, char **argv)
 {
 	srand(time(NULL));
@@ -208,23 +210,6 @@ int main (int argc, char **argv)
 
 			if(key[ENTER])
 				gameComplete = true;
-
-			/*******************
-			*  Map Offsetting  *
-			*******************/
-			xOff -= key[D] * 2;
-			xOff += key[A] * 2;
-			yOff -= key[S] * 2;
-			yOff += key[W] * 2;
-
-			/************************
-			*  Game Object Updating *
-			************************/
-			for (int i = 0; i < MAX_MONSTERS; i++)
-			{
-				monster[i]->setXOff(xOff);
-				monster[i]->setYOff(yOff);
-			}
 			
 			if (player->getMana() < 100 && player->getMana() >= 0)
 			{
@@ -236,6 +221,8 @@ int main (int argc, char **argv)
 				player->setMana(0);
 			for (iter = objects.begin(); iter != objects.end(); ++iter)
 				(*iter)->Update();
+			player->setVelY(0);
+			player->setVelX(0);
 			redraw = true;
 
 			/***************
@@ -366,4 +353,40 @@ int main (int argc, char **argv)
 	al_destroy_bitmap(mapSprite);
 
 	return 0;
+}
+
+void changeState (int &state, int newState)
+{
+	if(state == TITLE)
+	{
+
+	}
+	else if(state == PLAY)
+	{
+		for(iter = objects.begin(); iter != objects.end(); ++iter)
+		{
+			if ((*iter)->getID() != PLAYER && (*iter)->getID() != ENEMY)
+				(*iter)->setAlive(false);
+		}
+	}
+	else if(state == DEAD)
+	{
+
+	}
+	state = newState;
+
+	if(state == TITLE)
+	{
+
+	}
+	else if(state == PLAY)
+	{
+		/*player->;
+		for (int i = 0; i < MAX_MONSTERS;  i++)
+			monster[i]->init();*/
+	}
+	else if(state == DEAD)
+	{
+
+	}
 }

@@ -11,7 +11,7 @@ void Hero::InitHero(ALLEGRO_BITMAP *image, int Height, int Width)
 
 	Hero::image = image;
 
-	GameObject::init((sWIDTH/2),(sHEIGHT/2 + 300), 0, 0, 0, 0, 30, 30);
+	GameObject::init((Width/2),(Height/2 + 300), 0, 0, 0, 0, 30, 30);
 
 	setID(PLAYER);
 	setSuitID(NonSuit);
@@ -20,7 +20,6 @@ void Hero::InitHero(ALLEGRO_BITMAP *image, int Height, int Width)
 	setCollideable(true);
 	setDirection(DOWN);
 
-	mLives = 3;
 	maxFrame = 5;
 	curFrame = 1;
 	frameWidth = 30;
@@ -53,12 +52,6 @@ void Hero::Render()
 	//Energy Bar
 	if (getMana() > 0)
 		al_draw_filled_rectangle(0, height - 90, getMana() * 2, height - 85, al_map_rgb(0,0,255));
-	//Amount of lives left
-	while(count < getLives())
-	{
-		al_draw_filled_circle(((width - 20) - (count * 30)), 15, 5, al_map_rgb(255,0,0));
-		count++;
-	}
 }
 void Hero::Destroy()
 {
@@ -74,21 +67,25 @@ void Hero::Collide(int objectID)
 void Hero::moveUp()
 {
 	animationRow = 0;
+	setVelY(5);
 	dirY = -1;
 }
 void Hero::moveDown()
 {
 	animationRow = 3;
+	setVelY(5);
 	dirY = 1;
 }
 void Hero::moveLeft()
 {
 	animationRow = 1;
+	setVelX(5);
 	dirX = -1;
 }
 void Hero::moveRight()
 {
 	animationRow = 2;
+	setVelX(5);
 	dirX = 1;
 }
 Hero::~Hero()

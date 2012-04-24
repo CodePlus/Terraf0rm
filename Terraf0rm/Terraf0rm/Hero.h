@@ -1,5 +1,6 @@
 #pragma once
 #include "CharacterSprite.h"
+#include "monster.h"
 
 /*******************************************
 *				Player Class			   *
@@ -22,13 +23,9 @@ class Hero : public CharacterSprite
 
 			void setSuitID (int suit) {mSuitID = suit;}
 			int getSuitID() {return mSuitID;}
-			void setLives (int newLives) {mLives = newLives;}
-			int getLives() {return mLives;}
 
 			~Hero();
 	private:
 		//Tests to see wether the Hero is in their suit or not
 		int mSuitID;
-		//AMount of lives the player has
-		int mLives;
 };
