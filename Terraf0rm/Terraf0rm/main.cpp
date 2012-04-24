@@ -139,6 +139,7 @@ int main (int argc, char **argv)
 	**************************/
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
+	changeState(state, TITLE);
 	
 	/**************
 	*  Game Loop  *
@@ -155,6 +156,8 @@ int main (int argc, char **argv)
 			*********************/
 			if(state == TITLE)
 			{
+				if (FrameSmoother % 7 == 0)
+				{
 				if(key[W])
 				{
 					select--;
@@ -174,6 +177,11 @@ int main (int argc, char **argv)
 					else if(select == 3)
 						gameComplete = true;
 				}
+				redraw = true;
+				FrameSmoother = 1;
+				}
+				else
+					FrameSmoother++;
 			}
 			/**********************
 			*  GameState PLAYING  *
@@ -356,13 +364,16 @@ int main (int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = false;
-				if (player->getMana() > 0)
+				if(state == PLAY)
 				{
-					Cannon *bullet = new Cannon();
-					bullet->initCannon();
-					bullet->fireCannon(player);
-					objects.push_back(bullet);
-					player->useMana();
+					if (player->getMana() > 0)
+					{
+						Cannon *bullet = new Cannon();
+						bullet->initCannon();
+						bullet->fireCannon(player);
+						objects.push_back(bullet);
+						player->useMana();
+					}
 				}
 				break;
 			case ALLEGRO_KEY_ESCAPE:
@@ -382,17 +393,17 @@ int main (int argc, char **argv)
 			if (select == 1)
 			{
 				al_draw_bitmap(ArrowLeft,Width / 1.8, Height / 1.65, 0 );
-				al_draw_bitmap(ArrowRight,Width / 3.45, Height / 1.65, 0 );
+				al_draw_bitmap(ArrowRight,Width / 3.43, Height / 1.65, 0 );
 			}
 			else if (select == 2)
 			{
-				al_draw_bitmap(ArrowLeft,Width / 1.8, Height / 3, 0 );
-				al_draw_bitmap(ArrowRight,Width / 3.45, Height / 3, 0 );
+				al_draw_bitmap(ArrowLeft,Width / 1.72, Height / 1.48, 0 );
+				al_draw_bitmap(ArrowRight,Width / 3.43, Height / 1.48, 0 );
 			}
 			else if (select == 3)
 			{
-				al_draw_bitmap(ArrowLeft,Width / 1.8, Height / 4, 0 );
-				al_draw_bitmap(ArrowRight,Width / 3.45, Height / 4, 0 );
+				al_draw_bitmap(ArrowLeft,Width / 2.30, Height / 1.36, 0 );
+				al_draw_bitmap(ArrowRight,Width / 3.43, Height / 1.36, 0 );
 			}
 		}
 		if(state == PLAY)
