@@ -11,7 +11,7 @@ class Hero : public CharacterSprite
 	#pragma message ("Hero Class is included")
 	public:
 			Hero();
-			void InitHero(ALLEGRO_BITMAP *image, int Height, int Width);
+			void InitHero(ALLEGRO_BITMAP *image);
 			void Update();
 			void Render();
 			void Destroy();

@@ -46,8 +46,6 @@ class Monster : public CharacterSprite
 		ALLEGRO_FONT *mFont;
 		int mXOff;
 		int mYOff;
-		int mTotalHeight;
-		int mTotalWidth;
 };
 
 void drawHealthBar(int health, ALLEGRO_FONT *font, int pos_x, int pos_y);

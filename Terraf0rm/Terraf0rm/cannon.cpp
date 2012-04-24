@@ -60,13 +60,13 @@ void Cannon::Update()
 	case RIGHT: x+= getSpeed();
 		break;
 	}
-	if(y > sHEIGHT)
+	if(y >=  (mTotalHeight / 8) + sHEIGHT- 15)
 		Collided(ENEMY);
-	else if(y < 15)
+	else if(y <= 0 + 15  + (mTotalHeight / 8))
 		Collided(ENEMY);
-	if(x < 15)
+	if(x <= 0 + 15 + (mTotalWidth / 4))
 		Collided(ENEMY);
-	else if(x > sWIDTH)
+	else if(x >= (mTotalWidth / 4) + sWIDTH - 15 )
 		Collided(ENEMY);
 
  }

@@ -67,6 +67,7 @@
   <ItemGroup>
     <ClInclude Include="assembly.h" />
     <ClInclude Include="cannon.h" />
+    <ClInclude Include="CharacterSprite.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="monster.h" />

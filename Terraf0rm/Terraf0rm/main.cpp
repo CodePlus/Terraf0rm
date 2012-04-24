@@ -126,7 +126,7 @@ int main (int argc, char **argv)
 	}
 
 	//Then Initiate
-	player->InitHero(playerSprite, Height, Width);
+	player->InitHero(playerSprite);
 	objects.push_back(player);
 	for(int i = 0; i < MAX_MONSTERS; i++)
 	{
@@ -254,17 +254,16 @@ int main (int argc, char **argv)
 
 				if(key[ESCAPE])
 					gameComplete = true;
-
-				if (player->getMana() < 100 && player->getMana() >= 0)
-				{
-					if (EnergyRegen % 60 == 0)
-						player->setMana((player->getMana() + 1));
-					EnergyRegen++;
-				}
-
+				
 				/****************
 				*  Update Area  *
 				****************/
+				if (player->getMana() < 100 && player->getMana() >= 0)
+				{
+					if (EnergyRegen % 60 == 0)
+						player->setMana((player->getMana() + 3));
+					EnergyRegen++;
+				}
 
 				if (player->getMana() <= 0)
 					player->setMana(0);
@@ -272,6 +271,12 @@ int main (int argc, char **argv)
 					(*iter)->Update();
 				player->setVelY(0);
 				player->setVelX(0);
+
+				for(int i = 0; i < MAX_MONSTERS; i++)
+				{
+					if(monster[i]->getHealth() <= 0)
+						monster[i]->setAlive(false);
+				}
 				redraw = true;
 
 				/***************
@@ -466,7 +471,7 @@ void changeState (int &state, int newState)
 	}
 	else if(state == PLAY)
 	{
-		player->InitHero(NULL, Height, Width);
+		player->InitHero(NULL);
 	}
 	else if(state == DEAD)
 	{

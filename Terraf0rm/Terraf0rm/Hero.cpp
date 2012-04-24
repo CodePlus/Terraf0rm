@@ -4,12 +4,12 @@ Hero::Hero()
 {
 
 }
-void Hero::InitHero(ALLEGRO_BITMAP *image, int Height, int Width)
+void Hero::InitHero(ALLEGRO_BITMAP *image)
 {
 	setHealth(50);
 	setMana(100);
 
-	GameObject::init((Width/2),(Height/2 + 300), 0, 0, 0, 0, 30, 30);
+	GameObject::init((mTotalWidth/2),(mTotalHeight/2 + 300), 0, 0, 0, 0, 10, 10);
 
 	setID(PLAYER);
 	setSuitID(NonSuit);
@@ -57,34 +57,63 @@ void Hero::Destroy()
 }
 void Hero::Collided(int objectID)
 {
-	if(objectID == BULLET)
-		loseHealth();
-	else if (objectID == ENEMY)
+	/*if(objectID == BULLET)
+		loseHealth();*/
+	if (objectID == ENEMY)
 		loseHealth();
 }
 void Hero::moveUp()
 {
-	animationRow = 0;
-	setVelY(5);
-	dirY = -1;
+	if(y <= 0 + 15  + (mTotalHeight / 8))
+	{
+	}
+
+	else
+	{
+		animationRow = 0;
+		setVelY(5);
+		dirY = -1;
+	}
 }
 void Hero::moveDown()
 {
-	animationRow = 3;
-	setVelY(5);
-	dirY = 1;
+	if(y >=  (mTotalHeight / 8) + sHEIGHT)
+	{
+	}
+	
+	else
+	{
+		animationRow = 3;
+		setVelY(5);
+		dirY = 1;
+	}
 }
 void Hero::moveLeft()
 {
-	animationRow = 1;
-	setVelX(5);
-	dirX = -1;
+	if(x <= 0 + 15 + (mTotalWidth / 4))
+	{
+	}
+	
+	else
+	{
+		animationRow = 1;
+		setVelX(5);
+		dirX = -1;
+	}
 }
 void Hero::moveRight()
 {
-	animationRow = 2;
-	setVelX(5);
-	dirX = 1;
+	if(x >= (mTotalWidth / 4) + sWIDTH)
+	{
+	}
+	
+	else
+	{
+		animationRow = 2;
+		setVelX(5);
+		dirX = 1;
+	}
+	
 }
 Hero::~Hero()
 {

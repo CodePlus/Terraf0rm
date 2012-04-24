@@ -76,7 +76,7 @@ void Monster::initMonster(int randMonster, ALLEGRO_FONT *Font, int width, int he
 	if (x > ((mTotalHeight / 8) + sHEIGHT) + 15)
 		x = ((mTotalHeight / 8) + sHEIGHT) + 15;
 
-	GameObject::init(x,y, 1, 1, 0, 0, 30, 30);
+	GameObject::init(x,y, 1, 1, 0, 0, 20, 20);
 	mFont = Font;
 	setID(ENEMY);
 

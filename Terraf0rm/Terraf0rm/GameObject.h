@@ -78,6 +78,9 @@ protected:
 		int animationColumns;
 		int animationRow;
 
+		int mTotalHeight;
+		int mTotalWidth;
+
 		int Direction;
 
 		ALLEGRO_BITMAP *image;
@@ -88,4 +91,5 @@ private:
 		bool mIsAlive;
 		//Check to see if the object is collideable
 		bool mIsCollidable;
+
 };

@@ -29,6 +29,9 @@ GameObject::GameObject()
 
 	mIsAlive = true;
 	mIsCollidable = true;
+
+	mTotalHeight = widthHeight(1);
+	mTotalWidth = widthHeight(0);
 }
 
 void GameObject::Destroy()
