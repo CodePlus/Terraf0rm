@@ -7,7 +7,7 @@ class Monster : public CharacterSprite
 		Monster();
 		~Monster();
 
-		void initMonster(int randMonster, ALLEGRO_FONT *Font);
+		void initMonster(int randMonster, ALLEGRO_FONT *Font, int width, int height);
 	
 		void setName(string nName);
 		void setAttack(int nAttack);
@@ -46,6 +46,8 @@ class Monster : public CharacterSprite
 		ALLEGRO_FONT *mFont;
 		int mXOff;
 		int mYOff;
+		int mTotalHeight;
+		int mTotalWidth;
 };
 
 void drawHealthBar(int health, ALLEGRO_FONT *font, int pos_x, int pos_y);

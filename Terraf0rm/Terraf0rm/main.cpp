@@ -10,10 +10,11 @@
 ***********************/
 Hero *player;
 Monster *monster[MAX_MONSTERS];
+int Width = 0, Height = 0;
+int state = TITLE;
 std::list<GameObject *> objects;
 std::list<GameObject *>::iterator iter;
 std::list<GameObject *>::iterator iter2;
-
 void changeState (int &state, int newState);
 
 int main (int argc, char **argv)
@@ -22,11 +23,12 @@ int main (int argc, char **argv)
 	/*********************
 	*  Global Variables  *
 	*********************/
+	int select = 1;
 	bool gameComplete = false;
-	int Width = 0, Height = 0, FrameSmoother = 1;
+	int FrameSmoother = 1;
 	const int FPS = 60;
 	bool redraw = true;
-	bool key[7] = {false};
+	bool key[8] = {false};
 	int Frame = 1;
 	int EnergyRegen = 0;
 	/******************
@@ -74,8 +76,10 @@ int main (int argc, char **argv)
 	ALLEGRO_DISPLAY *display = NULL;
 	ALLEGRO_BITMAP *mapSprite = NULL;
 	ALLEGRO_BITMAP *playerSprite = NULL;
+	ALLEGRO_BITMAP *ArrowLeft = NULL;
+	ALLEGRO_BITMAP *ArrowRight = NULL;
+	ALLEGRO_BITMAP *TitleScreen = NULL;
 	ALLEGRO_FONT *font10;
-	
 
 	/**************************************
 	*  Initialize Allegro and components  *
@@ -99,14 +103,16 @@ int main (int argc, char **argv)
 	/***************************************
 	*  Load The Images and Set The Alphas  *
 	***************************************/
-
 	mapSprite = al_load_bitmap("art bitmaps/tiles.png");
-
 	playerSprite = al_load_bitmap("art bitmaps/Character bitmaps/Main character/main_character_shooting.bmp");
-
 	al_convert_mask_to_alpha(playerSprite, al_map_rgb(255,0,255));
-
+	ArrowLeft = al_load_bitmap("art bitmaps/Arrow_Left.bmp");
+	al_convert_mask_to_alpha(ArrowLeft, al_map_rgb(255,0,255));
+	ArrowRight = al_load_bitmap("art bitmaps/Arrow_Right.bmp");
+	al_convert_mask_to_alpha(ArrowRight, al_map_rgb(255,0,255));
+	TitleScreen = al_load_bitmap("art bitmaps/teraform title screen official.bmp");
 	font10 = al_load_font("fonts/arial.ttf", 10, 0);
+
 
 	/**************************
 	*  Object Initialization  *
@@ -124,7 +130,7 @@ int main (int argc, char **argv)
 	objects.push_back(player);
 	for(int i = 0; i < MAX_MONSTERS; i++)
 	{
-		monster[i]->initMonster(rand() % 3, font10);
+		monster[i]->initMonster(rand() % 3, font10, Width, Height);
 		objects.push_back(monster[i]);
 	}
 
@@ -144,107 +150,142 @@ int main (int argc, char **argv)
 		al_wait_for_event(event_queue, &ev);
 		if(ev.type == ALLEGRO_EVENT_TIMER)
 		{	
-			/********************
-			*  Player Movement  *
-			********************/
-			if(key[W])
+			/*********************
+			*  Game State Title  *
+			*********************/
+			if(state == TITLE)
 			{
-				player->setDirection(UP);
-				player->moveUp();
-				if (FrameSmoother % 10 == 0)
-			{
-				if (Frame > 3)
-					Frame = 1;
-				player->setcurFrame(Frame);
-				Frame++;
-				FrameSmoother = 1;
-			}
-			else
-				FrameSmoother++;
-			}
-			if(key[S])
-			{
-			player->setDirection(DOWN);
-			player->moveDown();
-			if (FrameSmoother % 10 == 0)
-			{
-				if (Frame > 3)
-					Frame = 1;
-				player->setcurFrame(Frame);
-				Frame++;
-				FrameSmoother = 1;
-			}
-			else
-				FrameSmoother++;
-			}
-			if(key[A])
-			{
-				player->setDirection(LEFT);
-				player->moveLeft();
-				if (FrameSmoother % 10 == 0)
+				if(key[W])
 				{
-					if (Frame > 3)
-						Frame = 1;
-					player->setcurFrame(Frame);
-					Frame++;
-					FrameSmoother = 1;
+					select--;
+					if(select < 1)
+						select = 3;
 				}
-			else
-				FrameSmoother++;
-			}
-			if(key[D])
-			{
-				player->setDirection(RIGHT);
-				player->moveRight();
-				if (FrameSmoother % 10 == 0)
+				if(key[S])
 				{
-					if (Frame > 3)
-						Frame = 1;
-					player->setcurFrame(Frame);
-					Frame++;
-					FrameSmoother = 1;
+					select++;
+					if(select > 3)
+						select = 1;
 				}
-			else
-				FrameSmoother++;
-			}
-
-			if(key[ENTER])
-				gameComplete = true;
-			
-			if (player->getMana() < 100 && player->getMana() >= 0)
-			{
-				if (EnergyRegen % 60 == 0)
-					player->setMana((player->getMana() + 1));
-				EnergyRegen++;
-			}
-			if (player->getMana() <= 0)
-				player->setMana(0);
-			for (iter = objects.begin(); iter != objects.end(); ++iter)
-				(*iter)->Update();
-			player->setVelY(0);
-			player->setVelX(0);
-			redraw = true;
-
-			/***************
-			*  Collisions  *
-			***************/
-
-			for(iter = objects.begin(); iter != objects.end(); ++iter)
-			{
-				if(!(*iter)->Collidable()) continue;
-				for(iter2 = iter; iter2 != objects.end(); ++iter2)
+				if(key[ENTER])
 				{
-					if(!(*iter2)->Collidable()) continue;
-					if((*iter)->getID() == (*iter2)->getID()) continue;
-
-					if((*iter)->checkCollisions((*iter2)))
+					if(select == 1)
+						changeState(state, PLAY);
+					else if(select == 3)
+						gameComplete = true;
+				}
+			}
+			/**********************
+			*  GameState PLAYING  *
+			**********************/
+			if(state == PLAY)
+			{
+				/********************
+				*  Player Movement  *
+				********************/
+				if(key[W])
+				{
+					player->setDirection(UP);
+					player->moveUp();
+					if (FrameSmoother % 10 == 0)
 					{
-						(*iter)->Collided((*iter2)->getID());
-						(*iter2)->Collided((*iter)->getID());
+						if (Frame > 3)
+							Frame = 1;
+						player->setcurFrame(Frame);
+						Frame++;
+						FrameSmoother = 1;
+					}
+					else
+						FrameSmoother++;
+				}
+				if(key[S])
+				{
+					player->setDirection(DOWN);
+					player->moveDown();
+					if (FrameSmoother % 10 == 0)
+					{
+						if (Frame > 3)
+							Frame = 1;
+						player->setcurFrame(Frame);
+						Frame++;
+						FrameSmoother = 1;
+					}
+					else
+						FrameSmoother++;
+				}
+				if(key[A])
+				{
+					player->setDirection(LEFT);
+					player->moveLeft();
+					if (FrameSmoother % 10 == 0)
+					{
+						if (Frame > 3)
+							Frame = 1;
+						player->setcurFrame(Frame);
+						Frame++;
+						FrameSmoother = 1;
+					}
+					else
+						FrameSmoother++;
+				}
+				if(key[D])
+				{
+					player->setDirection(RIGHT);
+					player->moveRight();
+					if (FrameSmoother % 10 == 0)
+					{
+						if (Frame > 3)
+							Frame = 1;
+						player->setcurFrame(Frame);
+						Frame++;
+						FrameSmoother = 1;
+					}
+					else
+						FrameSmoother++;
+				}
+
+				if(key[ESCAPE])
+					gameComplete = true;
+
+				if (player->getMana() < 100 && player->getMana() >= 0)
+				{
+					if (EnergyRegen % 60 == 0)
+						player->setMana((player->getMana() + 1));
+					EnergyRegen++;
+				}
+
+				/****************
+				*  Update Area  *
+				****************/
+
+				if (player->getMana() <= 0)
+					player->setMana(0);
+				for (iter = objects.begin(); iter != objects.end(); ++iter)
+					(*iter)->Update();
+				player->setVelY(0);
+				player->setVelX(0);
+				redraw = true;
+
+				/***************
+				*  Collisions  *
+				***************/
+
+				for(iter = objects.begin(); iter != objects.end(); ++iter)
+				{
+					if(!(*iter)->Collidable()) continue;
+					for(iter2 = iter; iter2 != objects.end(); ++iter2)
+					{
+						if(!(*iter2)->Collidable()) continue;
+						if((*iter)->getID() == (*iter2)->getID()) continue;
+
+						if((*iter)->checkCollisions((*iter2)))
+						{
+							(*iter)->Collided((*iter2)->getID());
+							(*iter2)->Collided((*iter)->getID());
+						}
 					}
 				}
 			}
-
 			/******************
 			*  CULL THE DEAD  *
 			******************/
@@ -285,6 +326,9 @@ int main (int argc, char **argv)
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = true;
 				break;
+			case ALLEGRO_KEY_ESCAPE:
+				key[ESCAPE] = true;
+				break;
 			}
 		}
 
@@ -321,26 +365,56 @@ int main (int argc, char **argv)
 					player->useMana();
 				}
 				break;
+			case ALLEGRO_KEY_ESCAPE:
+				key[ESCAPE] = false;
+				break;
 			}
 			player->setcurFrame(0);
 		}
-
-		if (redraw && al_is_event_queue_empty(event_queue))
+	/****************
+	*  Render Area  *
+	****************/
+	if (redraw && al_is_event_queue_empty(event_queue))
+	{
+		if(state == TITLE)
+		{
+			al_draw_scaled_bitmap(TitleScreen,0,0,al_get_bitmap_width(TitleScreen),al_get_bitmap_height(TitleScreen),0,0,Width,Height,0);
+			if (select == 1)
+			{
+				al_draw_bitmap(ArrowLeft,Width / 1.8, Height / 1.65, 0 );
+				al_draw_bitmap(ArrowRight,Width / 3.45, Height / 1.65, 0 );
+			}
+			else if (select == 2)
+			{
+				al_draw_bitmap(ArrowLeft,Width / 1.8, Height / 3, 0 );
+				al_draw_bitmap(ArrowRight,Width / 3.45, Height / 3, 0 );
+			}
+			else if (select == 3)
+			{
+				al_draw_bitmap(ArrowLeft,Width / 1.8, Height / 4, 0 );
+				al_draw_bitmap(ArrowRight,Width / 3.45, Height / 4, 0 );
+			}
+		}
+		if(state == PLAY)
 		{
 			for(int i = 0; i < mapSize; i++)
 			{
-				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, 250 + tileSize * (i % mapColumns), 25 + tileSize * (i / mapColumns), 0);
+				al_draw_bitmap_region(mapSprite, tileSize * map[i], 0, tileSize, tileSize, Width/4 + tileSize * (i % mapColumns), Height/8 + tileSize * (i / mapColumns), 0);
 			}
-
 			for(iter = objects.begin(); iter != objects.end(); ++iter)
 				(*iter)->Render();
-
-			al_flip_display();
-			al_clear_to_color(al_map_rgb(0,0,0));
-			redraw = false;
 		}
+		if(state == DEAD)
+		{
+		}
+		redraw = false;
+		al_flip_display();
+		al_clear_to_color(al_map_rgb(0,0,0));
 	}
-
+	}
+	/*******************
+	*  Destroy Region  *
+	*******************/
 	for(iter = objects.begin(); iter != objects.end();)
 	{
 		(*iter)->Destroy();
@@ -365,7 +439,7 @@ void changeState (int &state, int newState)
 	{
 		for(iter = objects.begin(); iter != objects.end(); ++iter)
 		{
-			if ((*iter)->getID() != PLAYER && (*iter)->getID() != ENEMY)
+			if ((*iter)->getID() != PLAYER)
 				(*iter)->setAlive(false);
 		}
 	}
@@ -381,9 +455,7 @@ void changeState (int &state, int newState)
 	}
 	else if(state == PLAY)
 	{
-		/*player->;
-		for (int i = 0; i < MAX_MONSTERS;  i++)
-			monster[i]->init();*/
+		player->InitHero(NULL, Height, Width);
 	}
 	else if(state == DEAD)
 	{

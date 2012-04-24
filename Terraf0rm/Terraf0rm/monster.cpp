@@ -9,6 +9,8 @@ Monster::Monster()
 	attack = 1;
 	range = 1;
 	mFrameCount = 0;
+	mTotalHeight = 0;
+	mTotalWidth = 0;
 }
 
 Monster::~Monster()
@@ -16,10 +18,11 @@ Monster::~Monster()
 }
 
 
-void Monster::initMonster(int randMonster, ALLEGRO_FONT *Font)
+void Monster::initMonster(int randMonster, ALLEGRO_FONT *Font, int width, int height)
 {
 	ALLEGRO_BITMAP *image = NULL; 
-
+	mTotalHeight = height;
+	mTotalWidth = width;
 	setHealth(100);
 
 	if(randMonster == 0)
@@ -62,7 +65,18 @@ void Monster::initMonster(int randMonster, ALLEGRO_FONT *Font)
 	dirX = 1;
 	dirY = 1;
 
-	GameObject::init(rand() % sWIDTH + 15 + 250, rand() % sHEIGHT + 15 + 25, 1, 1, 0, 0, 30, 30);
+	x = (mTotalWidth/4) + rand() % 700;
+	if(x < (mTotalWidth / 4) + 15)
+		x = (mTotalWidth / 4) + 15;
+	if (x > ((mTotalWidth / 4) + sWIDTH) - 15)
+		x = ((mTotalWidth / 4) + sWIDTH) - 15;
+	y = (mTotalHeight/8) +rand() % 700;
+	if(y < (mTotalHeight / 8) - 15)
+		x = (mTotalHeight / 8) - 15;
+	if (x > ((mTotalHeight / 8) + sHEIGHT) + 15)
+		x = ((mTotalHeight / 8) + sHEIGHT) + 15;
+
+	GameObject::init(x,y, 1, 1, 0, 0, 30, 30);
 	mFont = Font;
 	setID(ENEMY);
 
@@ -220,7 +234,7 @@ void Monster::move(int frameCount)
 
 void Monster::moveUp()
 {
-	if(y <= 0 + 15  + 25)
+	if(y <= 0 + 15  + (mTotalHeight / 8))
 	{
 	}
 
@@ -232,7 +246,7 @@ void Monster::moveUp()
 
 void Monster::moveDown()
 {
-	if(y >= sHEIGHT - spriteSize - 15 + 25)
+	if(y >=  (mTotalHeight / 8) + sHEIGHT - spriteSize - 15)
 	{
 	}
 	
@@ -244,7 +258,7 @@ void Monster::moveDown()
 
 void Monster::moveLeft()
 {
-	if(x <= 0 + 15 + 250)
+	if(x <= 0 + 15 + (mTotalWidth / 4))
 	{
 	}
 	
@@ -256,7 +270,7 @@ void Monster::moveLeft()
 
 void Monster::moveRight()
 {
-	if(x >= sWIDTH - spriteSize - 15 + 250)
+	if(x >= (mTotalWidth / 4) + sWIDTH - spriteSize - 15 )
 	{
 	}
 	

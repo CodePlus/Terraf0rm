@@ -9,8 +9,6 @@ void Hero::InitHero(ALLEGRO_BITMAP *image, int Height, int Width)
 	setHealth(50);
 	setMana(100);
 
-	Hero::image = image;
-
 	GameObject::init((Width/2),(Height/2 + 300), 0, 0, 0, 0, 30, 30);
 
 	setID(PLAYER);

@@ -9,7 +9,6 @@
 #include <allegro5/allegro_native_dialog.h>
 #include <allegro5/allegro_primitives.h>
 #include <list>
-
 #include <string>
 
 using namespace std;
@@ -24,11 +23,13 @@ enum ID{PLAYER, ENEMY, BULLET};
 
 enum heroID {NonSuit, Suit, Shooting};
 
-enum KEYS {W, A, S, D, E, SPACE, ENTER};
+enum KEYS {W, A, S, D, E, SPACE, ENTER, ESCAPE};
 
 enum DIRECTION {UP, DOWN, LEFT, RIGHT};
 
 enum GAMESTATE {TITLE, PLAY, DEAD};
+
+
 
 //Function that Reads the width and height
 int widthHeight (int variable);
