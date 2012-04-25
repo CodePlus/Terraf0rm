@@ -21,11 +21,11 @@ class Hero : public CharacterSprite
 			void moveLeft();
 			void moveRight();
 
-			void setSuitID (int suit) {mSuitID = suit;}
-			int getSuitID() {return mSuitID;}
+			void setHeroNumber (int number) {mHeroNumber = number;}
+			int getHeroNumber() {return mHeroNumber;}
 
 			~Hero();
 	private:
 		//Tests to see wether the Hero is in their suit or not
-		int mSuitID;
+		int mHeroNumber;
 };

@@ -19,7 +19,7 @@ int widthHeight (int variable)
 void displaySet (int width, int height, ALLEGRO_DISPLAY *display )
 {
 	//Sets the display to fullscreen and the same size as your screen
-	al_set_new_display_flags(ALLEGRO_FULLSCREEN);
+	al_set_new_display_flags(ALLEGRO_WINDOWED);
 	//Sets the default display
 	if (width != 0 && height != 0)
 		display = al_create_display(width, height);

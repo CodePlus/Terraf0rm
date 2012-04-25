@@ -12,7 +12,7 @@ void Hero::InitHero(ALLEGRO_BITMAP *image)
 	GameObject::init((mTotalWidth/2),(mTotalHeight/2 + 300), 0, 0, 0, 0, 10, 10);
 
 	setID(PLAYER);
-	setSuitID(NonSuit);
+	setHeroNumber(0);
 
 	setAlive(true);
 	setCollideable(true);
@@ -45,11 +45,22 @@ void Hero::Render()
 
 	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - frameWidth / 2, y - frameHeight / 2, 0);
 	//HUD
-	//Health Bar
-	al_draw_filled_rectangle(0, height - 100, getHealth() * 5, height - 95, al_map_rgb(255,0,0));
-	//Energy Bar
-	if (getMana() > 0)
-		al_draw_filled_rectangle(0, height - 90, getMana() * 2, height - 85, al_map_rgb(0,0,255));
+	if(mHeroNumber == 0)
+	{
+		//Health Bar
+		al_draw_filled_rectangle(0, height - 100, getHealth() * 5, height - 95, al_map_rgb(255,0,0));
+		//Energy Bar
+		if (getMana() > 0)
+			al_draw_filled_rectangle(0, height - 90, getMana() * 2, height - 85, al_map_rgb(0,0,255));
+	}
+	else if (mHeroNumber == 1)
+	{
+		//Health Bar
+		al_draw_filled_rectangle(width, height - 100, width - (getHealth() * 5), height - 95, al_map_rgb(255,0,0));
+		//Energy Bar
+		if (getMana() > 0)
+			al_draw_filled_rectangle(width, height - 90, width - (getMana() * 2), height - 85, al_map_rgb(0,0,255));
+	}
 }
 void Hero::Destroy()
 {
