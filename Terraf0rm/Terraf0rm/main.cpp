@@ -104,7 +104,7 @@ int main (int argc, char **argv)
 	al_install_audio();
 	al_init_acodec_addon();
 
-	//reserves one channel for sound
+	//reserves two channels for sound
 	al_reserve_samples(2);
 
 	Width = widthHeight(0);
