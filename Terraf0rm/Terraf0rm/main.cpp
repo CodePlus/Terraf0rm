@@ -79,6 +79,13 @@ int main (int argc, char **argv)
 	ALLEGRO_BITMAP *ArrowLeft = NULL;
 	ALLEGRO_BITMAP *ArrowRight = NULL;
 	ALLEGRO_BITMAP *TitleScreen = NULL;
+	ALLEGRO_SAMPLE *sample = NULL;
+	ALLEGRO_SAMPLE *Title = NULL;
+	ALLEGRO_SAMPLE *Play = NULL;
+	ALLEGRO_SAMPLE *BusterShot = NULL;
+	ALLEGRO_SAMPLE *Enter = NULL;
+	ALLEGRO_SAMPLE *Select = NULL;
+
 	ALLEGRO_FONT *font10;
 
 	/**************************************
@@ -94,6 +101,11 @@ int main (int argc, char **argv)
 	al_init_font_addon();
 	al_init_ttf_addon();
 	al_init_image_addon();
+	al_install_audio();
+	al_init_acodec_addon();
+
+	//reserves one channel for sound
+	al_reserve_samples(2);
 
 	Width = widthHeight(0);
 	Height = widthHeight(1);
@@ -113,6 +125,11 @@ int main (int argc, char **argv)
 	TitleScreen = al_load_bitmap("art bitmaps/teraform title screen official.bmp");
 	font10 = al_load_font("fonts/arial.ttf", 10, 0);
 
+	Title = al_load_sample("music/wasteland.ogg");
+	Play = al_load_sample("music/boss.ogg");
+	BusterShot = al_load_sample("music/buster.ogg");
+	Enter = al_load_sample("music/enter.ogg");
+	Select = al_load_sample("music/select.ogg");
 
 	/**************************
 	*  Object Initialization  *
@@ -140,6 +157,12 @@ int main (int argc, char **argv)
 	al_register_event_source(event_queue, al_get_keyboard_event_source());
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 	changeState(state, TITLE);
+
+	if(state == TITLE)
+	al_play_sample(Title, 0.5, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
+
+	//else if(state == PLAY)
+	//al_play_sample(Play, 1, 0, 1, ALLEGRO_PLAYMODE_LOOP, NULL);
 	
 	/**************
 	*  Game Loop  *
@@ -149,31 +172,39 @@ int main (int argc, char **argv)
 	{
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
+
 		if(ev.type == ALLEGRO_EVENT_TIMER)
 		{	
 			/*********************
 			*  Game State Title  *
 			*********************/
+
 			if(state == TITLE)
 			{
 				if (FrameSmoother % 7 == 0)
 				{
 				if(key[W])
 				{
+					al_play_sample(Select, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 					select--;
 					if(select < 1)
 						select = 3;
 				}
 				if(key[S])
 				{
+					al_play_sample(Select, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 					select++;
 					if(select > 3)
 						select = 1;
 				}
 				if(key[ENTER])
 				{
+					al_play_sample(Enter, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 					if(select == 1)
+					{
 						changeState(state, PLAY);
+					}
+
 					else if(select == 3)
 						gameComplete = true;
 				}
@@ -338,6 +369,7 @@ int main (int argc, char **argv)
 				break;
 			case ALLEGRO_KEY_SPACE:
 				key[SPACE] = true;
+				al_play_sample(BusterShot, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
 				break;
 			case ALLEGRO_KEY_ESCAPE:
 				key[ESCAPE] = true;
@@ -441,6 +473,7 @@ int main (int argc, char **argv)
 	al_destroy_timer(timer);
 	al_destroy_display(display);
 	al_destroy_bitmap(mapSprite);
+	al_destroy_sample(sample);
 
 	return 0;
 }
@@ -448,8 +481,7 @@ int main (int argc, char **argv)
 void changeState (int &state, int newState)
 {
 	if(state == TITLE)
-	{
-
+	{	
 	}
 	else if(state == PLAY)
 	{
@@ -463,6 +495,7 @@ void changeState (int &state, int newState)
 	{
 
 	}
+
 	state = newState;
 
 	if(state == TITLE)
