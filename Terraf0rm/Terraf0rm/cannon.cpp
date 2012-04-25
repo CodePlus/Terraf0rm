@@ -13,9 +13,9 @@ void Cannon::initCannon()
 	setCollideable(true);
 	setDirection(DOWN);
 	
-	setRed(50);
-	setGreen(255);
-	setBlue(10);
+	setRed(0);
+	setGreen(200);
+	setBlue(0);
 
 	setSize(3);
 	setSpeed(10);

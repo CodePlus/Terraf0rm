@@ -51,6 +51,9 @@ public:
 		int getCurFrame() {return curFrame;}
 		void setcurFrame(int newFrame) {curFrame = newFrame;}
 
+		void setFramWidth(int newFrameWidth) {GameObject::frameWidth = newFrameWidth;}
+		void setFrameHeight(int newFrameHeight) {GameObject::frameHeight = newFrameHeight;}
+
 		bool checkCollisions(GameObject *OtherObject);
 		void virtual Collided(int objectID);
 		bool Collidable();

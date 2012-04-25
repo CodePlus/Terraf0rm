@@ -18,52 +18,24 @@ Monster::~Monster()
 }
 
 
-void Monster::initMonster(int randMonster, ALLEGRO_FONT *Font, int width, int height)
+void Monster::initMonster(ALLEGRO_BITMAP *image, ALLEGRO_FONT *Font)
 {
-	ALLEGRO_BITMAP *image = NULL; 
-	mTotalHeight = height;
-	mTotalWidth = width;
+	mTotalHeight = widthHeight(1);
+	mTotalWidth = widthHeight(0);
 	setHealth(100);
-
-	if(randMonster == 0)
+	spriteSize = 30;
+	maxFrame = 4;
+	animationColumns = 4;
+	animationRow = 0;
+	if (image != NULL)
 	{
-		name = "CROCODILE";
-
-		image = al_load_bitmap("art bitmaps/Monster/monster1.bmp");
-		
-		maxFrame = 4;
-		animationColumns = 4;
-		animationRow = 0;
+		Monster::image = image;
 	}
 
-	else if(randMonster == 1)
+	if (Font != NULL)
 	{
-		name = "SKELETON";
-			
-		image = al_load_bitmap("art bitmaps/Monster/monster2.bmp");
-		
-		maxFrame = 4;
-		animationColumns = 4;
-		animationRow = 0;
+		Monster::mFont = Font;
 	}
-
-	else if(randMonster == 2)
-	{
-		name = "Monster3";
-		
-		image = al_load_bitmap("art bitmaps/Monster/monster3.bmp");
-
-		maxFrame = 4;
-		animationColumns = 4;
-		animationRow = 0;
-	}
-
-	al_convert_mask_to_alpha(image, al_map_rgb(255, 0, 255));
-
-	Monster::image = image;
-
-	dirX = 1;
-	dirY = 1;
 
 	x = (mTotalWidth/4) + rand() % 700;
 	if(x < (mTotalWidth / 4) + 15)
@@ -125,6 +97,8 @@ void Monster::Collided(int objectID)
 	if(objectID == BULLET)
 	{
 		loseHealth();
+		if(getHealth() <= 0)
+			setAlive(false);
 	}
 }
 
@@ -152,40 +126,34 @@ void Monster::Destroy()
 
 void Monster::Render()
 {
-	for(int i = 0; i < MAX_MONSTERS; i++)
+
+	if(direction == W)
 	{
-		if(getAlive())
-		{
-			al_draw_textf(mFont, al_map_rgb(0, 0, 0), x + 15, y + 35, ALLEGRO_ALIGN_CENTRE, "%s", name.c_str());
 
-			if(direction == W)
-			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, 0, spriteSize, spriteSize, x, y, 0);
-			}
-
-			else if(direction == A)
-			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 2, spriteSize, spriteSize, x, y, 0);
-			}
-
-			else if(direction == S)
-			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 1, spriteSize, spriteSize, x, y, 0);
-			}
-
-			else if(direction == D)
-			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 3, spriteSize, spriteSize, x, y, 0);
-			}
-
-			else if(direction == 4)
-			{
-				al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize, spriteSize, spriteSize, x, y, 0);
-			}
-
-			drawHealthBar(getHealth(), mFont, x, y);
-		}
+		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, 0, spriteSize, spriteSize, x, y, 0);
 	}
+
+	else if(direction == A)
+	{
+		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 2, spriteSize, spriteSize, x, y, 0);
+	}
+
+	else if(direction == S)
+	{
+		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 1, spriteSize, spriteSize, x, y, 0);
+	}
+
+	else if(direction == D)
+	{
+		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 3, spriteSize, spriteSize, x, y, 0);
+	}
+
+	else if(direction == 4)
+	{
+		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize, spriteSize, spriteSize, x, y, 0);
+	}
+
+	drawHealthBar(getHealth(), mFont, x, y);
 }
 
 void Monster::move(int frameCount)
@@ -197,6 +165,7 @@ void Monster::move(int frameCount)
 
 	if(direction == W)
 	{
+		setDirection(UP);
 		if((frameCount % 60) != 0)
 		{
 			moveUp();
@@ -205,6 +174,7 @@ void Monster::move(int frameCount)
 
 	else if(direction == A)
 	{
+		setDirection(LEFT);
 		if((frameCount % 60) != 0)
 		{
 			moveLeft();
@@ -213,6 +183,7 @@ void Monster::move(int frameCount)
 
 	else if(direction == S)
 	{
+		setDirection(DOWN);
 		if((frameCount % 60) != 0)
 		{
 			moveDown();
@@ -221,6 +192,7 @@ void Monster::move(int frameCount)
 
 	else if(direction == D)
 	{
+		setDirection(RIGHT);
 		if((frameCount % 60) != 0)
 		{
 			moveRight();

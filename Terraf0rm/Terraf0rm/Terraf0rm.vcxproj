@@ -68,6 +68,7 @@
     <ClInclude Include="assembly.h" />
     <ClInclude Include="cannon.h" />
     <ClInclude Include="CharacterSprite.h" />
+    <ClInclude Include="DragonAttack.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Hero.h" />
     <ClInclude Include="monster.h" />
@@ -77,6 +78,7 @@
     <ClCompile Include="cannon.cpp" />
     <ClCompile Include="CharacterSprite.cpp" />
     <ClCompile Include="displaySetUp.cpp" />
+    <ClCompile Include="DragonAttack.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Hero.cpp" />
     <ClCompile Include="main.cpp" />

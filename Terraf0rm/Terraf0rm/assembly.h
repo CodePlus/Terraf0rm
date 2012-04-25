@@ -17,11 +17,10 @@ using namespace std;
 
 #define sWIDTH 720
 #define sHEIGHT 720
-#define spriteSize 30
 #define MAX_MONSTERS 10
 #define MAX_CANNON_PARTICLES 10
 
-enum ID{PLAYER, ENEMY, BULLET};
+enum ID{PLAYER, ENEMY, BULLET, DRAGON};
 
 enum heroID {NonSuit, Suit, Shooting};
 
@@ -29,7 +28,7 @@ enum KEYS {W, A, S, D, E, SPACE, ENTER, ESCAPE};
 
 enum DIRECTION {UP, DOWN, LEFT, RIGHT};
 
-enum GAMESTATE {TITLE, PLAY, DEAD};
+enum GAMESTATE {TITLE, PLAY, DEAD, WON};
 
 
 
