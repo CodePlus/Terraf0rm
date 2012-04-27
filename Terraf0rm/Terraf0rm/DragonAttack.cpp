@@ -4,20 +4,27 @@ DragonAttack::DragonAttack()
 {
 
 }
-void DragonAttack::InitDragon()
+void DragonAttack::InitDragon(ALLEGRO_BITMAP *image)
 {
 	GameObject::init(0,0,10,10,0,0,3,3);
-	setID(ENEMY);
+	setID(FIREBALL);
 	setAlive(false);
 	setCollideable(true);
 	setDirection(DOWN);
 	
-	setRed(178);
-	setGreen(34);
-	setBlue(34);
+	maxFrame = 4;
+	curFrame = 1;
+	frameWidth = 16;
+	frameHeight = 16;
+	animationColumns = 4;
+	animationRow = 0;
+	mFrameSmoother = 1;
 
 	setSize(20);
 	setSpeed(15);
+
+	if(image != NULL)
+		GameObject::image = image;
 }
 void DragonAttack::Attack (Monster *Boss)
 {
@@ -51,7 +58,20 @@ void DragonAttack::Update()
 }
 void DragonAttack::Render()
 {
-	al_draw_filled_rectangle(x, y, x + getSize(), y + getSize(), al_map_rgb(getRed(), getGreen(), getBlue()));
+	GameObject::Render();
+	int fx = (curFrame % animationColumns * frameWidth);
+	int fy = animationRow * frameHeight;
+
+	al_draw_bitmap_region(image, fx, fy, frameWidth, frameHeight, x - frameWidth / 2, y - frameHeight / 2, 0);
+	if (mFrameSmoother % 10 == 0)
+	{
+		if (curFrame > 3)
+			curFrame = 1;
+		curFrame++;
+		mFrameSmoother = 1;
+	}
+	else
+		mFrameSmoother++;
 }
 void DragonAttack::Collided(int objectID)
 {

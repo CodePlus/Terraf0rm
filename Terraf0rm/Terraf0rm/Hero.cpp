@@ -70,7 +70,7 @@ void Hero::Collided(int objectID)
 {
 	/*if(objectID == BULLET)
 		loseHealth();*/
-	if (objectID == ENEMY || objectID == DRAGON)
+	if (objectID == ENEMY || objectID == DRAGON || objectID == FIREBALL)
 	{
 		loseHealth();
 		if(getHealth() <= 0)

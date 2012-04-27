@@ -108,15 +108,6 @@ void Monster::Update()
 
 	mFrameCount++;
 
-	if(++frameCount >= frameDelay + 10)
-	{
-		if(++curFrame >= maxFrame)
-		{
-			curFrame = 0;
-		}
-
-		frameCount = 0;
-	}
 }
 
 void Monster::Destroy()
@@ -126,31 +117,34 @@ void Monster::Destroy()
 
 void Monster::Render()
 {
+	if(++frameCount >= frameDelay + 10)
+	{
+		if(++curFrame >= maxFrame)
+		{
+		curFrame = 0;
+		}
+		frameCount = 0;
+	}
 
-	if(direction == W)
+	if(Direction == UP)
 	{
 
 		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, 0, spriteSize, spriteSize, x, y, 0);
 	}
 
-	else if(direction == A)
+	else if(Direction == LEFT)
 	{
 		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 2, spriteSize, spriteSize, x, y, 0);
 	}
 
-	else if(direction == S)
+	else if(Direction == DOWN)
 	{
 		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 1, spriteSize, spriteSize, x, y, 0);
 	}
 
-	else if(direction == D)
+	else if(Direction == RIGHT)
 	{
 		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize * 3, spriteSize, spriteSize, x, y, 0);
-	}
-
-	else if(direction == 4)
-	{
-		al_draw_bitmap_region(Monster::image, curFrame * frameWidth, spriteSize, spriteSize, spriteSize, x, y, 0);
 	}
 
 	drawHealthBar(getHealth(), mFont, x, y);
@@ -160,10 +154,10 @@ void Monster::move(int frameCount)
 { 
 	if((frameCount % 60) == 0)
 	{
-		direction = rand() % 5;
+		Direction = rand() % 4;
 	}
 
-	if(direction == W)
+	if(Direction == UP)
 	{
 		setDirection(UP);
 		if((frameCount % 60) != 0)
@@ -172,7 +166,7 @@ void Monster::move(int frameCount)
 		}
 	}
 
-	else if(direction == A)
+	else if(Direction == LEFT)
 	{
 		setDirection(LEFT);
 		if((frameCount % 60) != 0)
@@ -181,7 +175,7 @@ void Monster::move(int frameCount)
 		}
 	}
 
-	else if(direction == S)
+	else if(Direction == DOWN)
 	{
 		setDirection(DOWN);
 		if((frameCount % 60) != 0)
@@ -190,7 +184,7 @@ void Monster::move(int frameCount)
 		}
 	}
 
-	else if(direction == D)
+	else if(Direction == RIGHT)
 	{
 		setDirection(RIGHT);
 		if((frameCount % 60) != 0)

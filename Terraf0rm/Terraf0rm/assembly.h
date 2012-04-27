@@ -17,10 +17,10 @@ using namespace std;
 
 #define sWIDTH 720
 #define sHEIGHT 720
-#define MAX_MONSTERS 10
+#define MAX_MONSTERS 5
 #define MAX_CANNON_PARTICLES 10
 
-enum ID{PLAYER, ENEMY, BULLET, DRAGON};
+enum ID{PLAYER, ENEMY, BULLET, DRAGON, PLAYER2, FIREBALL};
 
 enum heroID {NonSuit, Suit, Shooting};
 

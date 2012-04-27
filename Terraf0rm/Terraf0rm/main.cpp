@@ -41,6 +41,8 @@ int main (int argc, char **argv)
 	bool Dragon = true;
 	bool DeadDragon = false;
 	int Dragonattack = 1;
+	bool Alive1 = true, Alive2 = true, Init = true;
+	int fireFrame = 1, fireSmoother = 1;
 	/******************
 	*  Map Variables  *
 	******************/
@@ -97,6 +99,7 @@ int main (int argc, char **argv)
 	ALLEGRO_BITMAP *DeathScreen = NULL;
 	ALLEGRO_BITMAP *BOSS = NULL;
 	ALLEGRO_BITMAP *WIN = NULL;
+	ALLEGRO_BITMAP *FireBall = NULL;
 	ALLEGRO_JOYSTICK *joystick = NULL;
 	ALLEGRO_SAMPLE *sample = NULL;
 	ALLEGRO_SAMPLE *Title = NULL;
@@ -153,6 +156,8 @@ int main (int argc, char **argv)
 	al_convert_mask_to_alpha(Smile, al_map_rgb(255,0,255));
 	BOSS = al_load_bitmap("art bitmaps/Monster/Boss Monster.bmp");
 	al_convert_mask_to_alpha(BOSS, al_map_rgb(255,0,255));
+	FireBall = al_load_bitmap("art bitmaps/Monster/dragonfire move.bmp");
+	al_convert_mask_to_alpha(FireBall, al_map_rgb(255,0,255));
 	TitleScreen = al_load_bitmap("art bitmaps/teraform title screen official.bmp");
 	DeathScreen = al_load_bitmap("art bitmaps/dead screen.bmp");
 	WIN = al_load_bitmap("art bitmaps/Win screen.bmp");
@@ -163,43 +168,48 @@ int main (int argc, char **argv)
 	Enter = al_load_sample("music/enter.ogg");
 	Select = al_load_sample("music/select.ogg");
 	FlameAttack = al_load_sample("music/fire.ogg"); 
-	/**************************
-	*  Object Initialization  *
-	***************************/
-	//First Allocate Memory Space for each object
-	player = new Hero();
-	player2 = new Hero();
-	for(int i = 0; i < MAX_MONSTERS; i++)
+	if(Init == true)
 	{
-		monster[i] = new Monster();
-	}
-
-	//Then Initiate
-	player->InitHero(playerSprite);
-	objects.push_back(player);
-	player2->InitHero(player2Sprite);
-	player2->setHeroNumber(1);
-	player2->setX(player->getX()+30);
-	objects.push_back(player2);
-	for(int i = 0; i < MAX_MONSTERS; i++)
-	{
-		int randMonster = rand() % 3;
-		switch(randMonster)
+		/**************************
+		*  Object Initialization  *
+		***************************/
+		//First Allocate Memory Space for each object
+		player = new Hero();
+		player2 = new Hero();
+		for(int i = 0; i < MAX_MONSTERS; i++)
 		{
-		case 0: 
+			monster[i] = new Monster();
+		}
+
+		//Then Initiate
+		player->InitHero(playerSprite);
+		objects.push_back(player);
+		player2->InitHero(player2Sprite);
+		player2->setHeroNumber(1);
+		player2->setID(PLAYER2);
+		player2->setX(player->getX()+30);
+		objects.push_back(player2);
+		for(int i = 0; i < MAX_MONSTERS; i++)
+		{
+			int randMonster = rand() % 3;
+			switch(randMonster)
+			{
+			case 0: 
 				monster[i]->setName("Crocodile");
 				monster[i]->initMonster(Crocodile, font10);
-			break;
-		case 1: 
+				break;
+			case 1: 
 				monster[i]->setName("Skeleton");
 				monster[i]->initMonster(Skeleton, font10);
-			break;
-		case 2:
-			monster[i]->setName("Blob");
-			monster[i]->initMonster(Smile ,font10);
-			break;
+				break;
+			case 2:
+				monster[i]->setName("Blob");
+				monster[i]->initMonster(Smile ,font10);
+				break;
+			}
+			objects.push_back(monster[i]);
 		}
-		objects.push_back(monster[i]);
+		Init = false;
 	}
 	al_reconfigure_joysticks();
     joystick=al_get_joystick(0);
@@ -223,6 +233,7 @@ int main (int argc, char **argv)
 	{
 		ALLEGRO_EVENT ev;
 		al_wait_for_event(event_queue, &ev);
+		
 		if(ev.type == ALLEGRO_EVENT_KEY_DOWN)
 		{
 			switch(ev.keyboard.keycode)
@@ -446,6 +457,7 @@ int main (int argc, char **argv)
 			**********************/
 			if(state == PLAY)
 			{
+				
 				/********************
 				*  Player Movement  *
 				********************/
@@ -519,7 +531,7 @@ int main (int argc, char **argv)
 				if (player->getMana() < 100 && player->getMana() >= 0)
 				{
 					if (EnergyRegen % 60 == 0)
-						player->setMana((player->getMana() + 3));
+						player->setMana((player->getMana() + 8));
 					EnergyRegen++;
 				}
 
@@ -530,7 +542,7 @@ int main (int argc, char **argv)
 					if (player2->getMana() < 100 && player2->getMana() >= 0)
 					{
 						if (EnergyRegen2 % 60 == 0)
-							player2->setMana((player2->getMana() + 3));
+							player2->setMana((player2->getMana() + 8));
 						EnergyRegen2++;
 					}
 
@@ -538,7 +550,60 @@ int main (int argc, char **argv)
 						player2->setMana(0);
 				}
 				for (iter = objects.begin(); iter != objects.end(); ++iter)
-					(*iter)->Update();
+				{
+					if((*iter)->getID() == DRAGON || (*iter)->getID() == FIREBALL || (*iter)->getID() == ENEMY)
+					{
+						if(select == 1)
+						{
+							if ((player->getY() - (*iter)->getY()) < 0)
+							{
+								(*iter)->setDirection(UP);
+								if((*iter)->getY() <= 0 + 15  + (widthHeight(1) / 8))
+								{
+								}
+								else
+								{
+									(*iter)->setY((*iter)->getY() - (*iter)->getVelY());
+								}
+							}
+							if ((player->getY() - (*iter)->getY()) > 0)
+							{
+								(*iter)->setDirection(DOWN);
+								if((*iter)->getY() >=  (widthHeight(1) / 8) + sHEIGHT - 35 - 15)
+								{
+								}
+								else
+								{
+									(*iter)->setY((*iter)->getY() + (*iter)->getVelY());
+								}
+							}
+							if ((player->getX() - (*iter)->getX()) < 0)
+							{
+								(*iter)->setDirection(LEFT);
+								if((*iter)->getX() <= 0 + 15  + (widthHeight(0) / 4))
+								{
+								}
+								else
+								{
+									(*iter)->setX((*iter)->getX() - (*iter)->getVelX());
+								}
+							}
+							if ((player->getX() - (*iter)->getX()) > 0)
+							{
+								(*iter)->setDirection(RIGHT);
+								if((*iter)->getX() >=  (widthHeight(0) / 4) + sWIDTH - 35 - 15)
+								{
+								}
+								else
+								{
+									(*iter)->setX((*iter)->getX() + (*iter)->getVelX());
+								}
+							}
+						}
+					}
+					else
+						(*iter)->Update();
+				}
 				player->setVelY(0);
 				player->setVelX(0);
 
@@ -552,7 +617,7 @@ int main (int argc, char **argv)
 					Boss->initMonster(BOSS, font10);
 					Boss->setName("Dragon");
 					Boss->setID(DRAGON);
-					Boss->setHealth(200);
+					Boss->setHealth(500);
 					Boss->setFrameHeight(35);
 					Boss->setFramWidth(35);
 					Boss->setSpriteSize(35);
@@ -564,7 +629,7 @@ int main (int argc, char **argv)
 					if(Dragonattack % 60 == 0)
 					{
 						DragonAttack *flame = new DragonAttack();
-						flame->InitDragon();
+						flame->InitDragon(FireBall);
 						flame->Attack(Boss);
 						objects.push_back(flame);
 						al_play_sample(FlameAttack, 1, 0, 1, ALLEGRO_PLAYMODE_ONCE, NULL);
@@ -597,16 +662,22 @@ int main (int argc, char **argv)
 				/******************
 				*  CULL THE DEAD  *
 				******************/
-				if (select == 1 && player->getHealth() <= 0)
+				if (select == 1 && Alive1 == false)
 				{
-						changeState(state, DEAD);
+					Alive1 = true;
+					Init = true;
+					changeState(state, DEAD);
 				}
-				else if (select == 2 && player->getHealth() <= 0 && player2->getHealth() <= 0)
+				else if (select == 2 && Alive1 == false && Alive2 == false)
 				{
-						changeState(state, DEAD);
+					Alive1 = true;
+					Alive2 = true;
+					Init = true;
+					changeState(state, DEAD);
 				}
 				else if (DeadDragon == true)
 				{
+					Init = true;
 					changeState(state, WON);
 				}
 				else
@@ -623,7 +694,14 @@ int main (int argc, char **argv)
 							{
 								DeadDragon = true;
 							}
-
+							else if ((*iter)->getID() == PLAYER)
+							{
+								Alive1 = false;
+							}
+							else if ((*iter)->getID() == PLAYER2)
+							{
+								Alive2 = false;
+							}
 							delete (*iter);
 							iter = objects.erase(iter);
 						}
@@ -794,6 +872,7 @@ int main (int argc, char **argv)
 	al_destroy_bitmap(DeathScreen);
 	al_destroy_bitmap(BOSS);
 	al_destroy_bitmap(WIN);
+	al_destroy_bitmap(FireBall);
 	al_destroy_sample(sample);
 	al_destroy_sample(Title);
 	al_destroy_sample(Play);
@@ -815,8 +894,9 @@ void changeState (int &state, int newState)
 	{
 		for(iter = objects.begin(); iter != objects.end(); ++iter)
 		{
-			if ((*iter)->getID() != PLAYER)
-				(*iter)->setAlive(false);
+			(*iter)->Destroy();
+			delete(*iter);
+			iter = objects.erase(iter);
 		}
 	}
 	else if(state == DEAD)
@@ -832,9 +912,7 @@ void changeState (int &state, int newState)
 	}
 	else if(state == PLAY)
 	{
-		player->InitHero(NULL);
-		player2->InitHero(NULL);
-		player2->setHeroNumber(1);
+
 	}
 	else if(state == DEAD)
 	{

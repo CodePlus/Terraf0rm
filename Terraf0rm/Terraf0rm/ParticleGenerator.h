@@ -45,4 +45,5 @@ protected:
 		int mRed;
 		int mGreen;
 		int mBlue;
+		int mFrameSmoother;
 };

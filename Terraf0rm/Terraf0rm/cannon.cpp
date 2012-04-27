@@ -76,7 +76,7 @@ void Cannon::Render()
 }
 void Cannon::Collided(int objectID)
 {
-	if (objectID == ENEMY)
+	if (objectID == ENEMY || objectID == DRAGON)
 		setAlive(false);
 }
 

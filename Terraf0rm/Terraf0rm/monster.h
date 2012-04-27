@@ -40,8 +40,6 @@ class Monster : public CharacterSprite
 		int attack;
 		int range;
 
-		int direction;
-
 	private:
 		int mFrameCount;
 		ALLEGRO_FONT *mFont;

@@ -6,7 +6,7 @@ class DragonAttack : public ParticleGenerator
 {
 public:
 	DragonAttack();
-	void InitDragon();
+	void InitDragon(ALLEGRO_BITMAP *image);
 	void Attack (Monster *Boss);
 	void Update();
 	void Render();
