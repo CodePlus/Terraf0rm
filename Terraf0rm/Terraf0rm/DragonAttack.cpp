@@ -29,8 +29,8 @@ void DragonAttack::InitDragon(ALLEGRO_BITMAP *image)
 void DragonAttack::Attack (Monster *Boss)
 {
 	setAlive(true);
-	setX(Boss->getX());
-	setY(Boss->getY());
+	setX(Boss->getX() + 17.5);
+	setY(Boss->getY() + 17.5);
 	setDirection(Boss->getDirection());
 }
 void DragonAttack::Update()

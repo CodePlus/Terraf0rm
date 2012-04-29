@@ -1,40 +1,15 @@
-﻿Build started 4/27/2012 3:03:45 PM.
-     1>Project "C:\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm.vcxproj" on node 2 (build target(s)).
+﻿Build started 4/29/2012 2:26:20 PM.
+     1>Project "C:\Development\C++\Teraform\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating "Debug\Terraf0rm.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Ic:\allegro\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt CharacterSprite.cpp DragonAttack.cpp GameObject.cpp Hero.cpp ParticleGenerator.cpp cannon.cpp displaySetUp.cpp main.cpp monster.cpp
-         CharacterSprite.cpp
-         Game Object is included
-         CharacterSprite Class is included
-         Generating Code...
-         Compiling...
-         monster.cpp
-         Game Object is included
-         CharacterSprite Class is included
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /Ic:\allegro\include /ZI /nologo /W3 /WX- /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
          main.cpp
          Game Object is included
          CharacterSprite Class is included
          Hero Class is included
-         displaySetUp.cpp
-         cannon.cpp
-         Game Object is included
-         CharacterSprite Class is included
-         Hero Class is included
-         ParticleGenerator.cpp
-         Game Object is included
-         Hero.cpp
-         Game Object is included
-         CharacterSprite Class is included
-         Hero Class is included
-         GameObject.cpp
-         Game Object is included
-         DragonAttack.cpp
-         Game Object is included
-         CharacterSprite Class is included
-         Generating Code...
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe" /NOLOGO /LIBPATH:c:\allegro\lib "allegro-5.0.6-monolith-md-debug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Terraf0rm.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.lib" /MACHINE:X86 Debug\cannon.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Development\C++\Teraform\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe" /NOLOGO /LIBPATH:c:\allegro\lib "allegro-5.0.6-monolith-md-debug.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Terraf0rm.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Development\C++\Teraform\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Development\C++\Teraform\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.lib" /MACHINE:X86 Debug\cannon.obj
          Debug\CharacterSprite.obj
          Debug\displaySetUp.obj
          Debug\DragonAttack.obj
@@ -43,15 +18,15 @@
          Debug\main.obj
          Debug\monster.obj
          Debug\ParticleGenerator.obj
-         LINK : C:\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe not found or not built by the last incremental link; performing full link
-         Terraf0rm.vcxproj -> C:\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe
+         LINK : C:\Development\C++\Teraform\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe not found or not built by the last incremental link; performing full link
+         Terraf0rm.vcxproj -> C:\Development\C++\Teraform\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe
        Manifest:
-         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe;#1" /manifest Debug\Terraf0rm.exe.intermediate.manifest
+         C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"C:\Development\C++\Teraform\Terraf0rm\Terraf0rm\Terraf0rm\Debug\Terraf0rm.exe;#1" /manifest Debug\Terraf0rm.exe.intermediate.manifest
        FinalizeBuildStatus:
          Deleting file "Debug\Terraf0rm.unsuccessfulbuild".
          Touching "Debug\Terraf0rm.lastbuildstate".
-     1>Done Building Project "C:\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm.vcxproj" (build target(s)).
+     1>Done Building Project "C:\Development\C++\Teraform\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm\Terraf0rm.vcxproj" (build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:07.84
+Time Elapsed 00:00:01.12
